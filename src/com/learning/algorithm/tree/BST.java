@@ -1,5 +1,8 @@
 package com.learning.algorithm.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BST<T extends Comparable<T>> {
 	public static void main(String[] args) {
 		BST<Integer> tree = new BST<Integer>();
@@ -14,6 +17,7 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(root, 100);
 		tree.insertNode(root, 70);
 		tree.insertNode(root, 120);
+		tree.insertNode(root, 160);
 		
 		//traversal
 		tree.printInOrder(root);
@@ -29,13 +33,21 @@ public class BST<T extends Comparable<T>> {
 		System.out.println("Min : " + tree.getMin(root) + " , Max : " + tree.getMax(root));
 		
 		//wrong BST
-		Node<Integer> root1 = new Node<Integer>(30);
-		root1.left = new Node<Integer>(100);
-		root1.right = new Node<Integer>(120);
-		root1.left.left = new Node<Integer>(200);
+		Node<Integer> root1 = new Node<Integer>(50);
+		root1.right = new Node<Integer>(60);
+		root1.right.right = new Node<Integer>(45);
 		
 		//check isBST
 		System.out.println("isBST: " + tree.isBST(root1, new Node<Integer>()));
+		
+		//height
+		System.out.println("Tree Height: " + tree.height(root));
+		
+		//print level order in a line
+		tree.printLevelOrder(root);
+		
+		//print level order line by line
+		tree.printLevelOrderLinebyLine(root);
 	}
 	
 	void insertNode(Node<T> root, T key) {
@@ -136,6 +148,77 @@ public class BST<T extends Comparable<T>> {
 			return root.key;
 		
 		return getMax(root.right);
+	}
+	
+	int height(Node<T> root) {
+		if(root == null)
+			return 0;
+		
+		if(root.left == null && root.right == null)
+			return 1;
+		
+		return max(height(root.left), height(root.right)) + 1;
+	}
+
+	private int max(int a, int b) {
+		return (a > b) ? a : b;
+	}
+	
+	void printLevelOrder(Node<T> root) {
+		if(root == null)
+			return;
+		
+		Queue<Node<T>> Q = new LinkedList<Node<T>>();
+		
+		Q.add(root);
+		
+		while(!Q.isEmpty()) {
+			Node<T> front = Q.poll();
+			
+			System.out.print(front.key + " ");
+			
+			if(front.left != null)
+				Q.add(front.left);
+			
+			if(front.right != null)
+				Q.add(front.right);
+		}
+	}
+	
+	void printLevelOrderLinebyLine(Node<T> root) {
+		if(root == null)
+			return;
+		
+		int count = 0;
+		
+		Queue<Node<T>> Q = new LinkedList<Node<T>>();
+		
+		Q.add(root);
+		
+		System.out.println(root.key);
+		
+		while(true) {
+			count = Q.size();
+			
+			if(count == 0)
+				break;
+			
+			while(count > 0) {
+				Node<T> front = Q.poll();
+				
+				System.out.print(front.key + " ");
+				
+				if(front.left != null)
+					Q.add(front.left);
+				
+				if(front.right != null)
+					Q.add(front.right);
+				
+				count--;
+			}
+			
+			System.out.println();
+		}
 	}
 }
 
