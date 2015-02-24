@@ -17,7 +17,7 @@ public class AllSubsetAlt {
 	private static void printAllSubset(char[] a, int subsetSize) {
 		long startTime = new Date().getTime();
 		
-		for (int i = 0; i < subsetSize; i++) {
+		for (int i = 1; i < subsetSize; i++) {
 			int l = 0;
 
 			while (l < a.length) {

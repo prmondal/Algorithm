@@ -15,12 +15,12 @@ public class AllSubset {
 		int[] solution = new int[str.length()];
 		
 		
-		printAllSubset(str.toCharArray(), 0, str.length() - 1);
-		//printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
+		//printAllSubset(str.toCharArray(), 0, str.length() - 1);
+		printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
 
 	}
 
-	/*private static void printAllSubset(char[] array, int start, int end, int[] solution) {
+	private static void printAllSubset(char[] array, int start, int end, int[] solution) {
 		if(start > end) {
 			return;
 		}
@@ -28,13 +28,13 @@ public class AllSubset {
 		for(int i = start; i <= end; i++) {
 			solution[i] = 1;
 			
-			printAllSubset(array, start + 1, end, solution);
+			printAllSubset(array, i + 1, end, solution);
 			
 			printSet(solution, array);
 			
 			solution[i] = 0;
 			
-			start++;
+			//start++;
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class AllSubset {
 		}
 		
 		System.out.println();
-	}*/
+	}
 	
 	private static void printAllSubset(char[] array, int start, int end) {
 		for(int i = start; i <= end; i++) {
@@ -62,10 +62,8 @@ public class AllSubset {
 	}
 
 	private static void printSubSet(Stack<Character> stack) {
-		Iterator<Character> it = stack.iterator();
-		
-		while(it.hasNext()) {
-			System.out.print(it.next() + " ");
+		for(Character c: stack) {
+			System.out.print(c + " ");
 		}
 		
 		System.out.println();

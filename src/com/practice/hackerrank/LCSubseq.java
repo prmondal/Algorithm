@@ -2,7 +2,7 @@ package com.practice.hackerrank;
 
 import java.util.Scanner;
 
-public class LCSString {
+public class LCSubseq {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

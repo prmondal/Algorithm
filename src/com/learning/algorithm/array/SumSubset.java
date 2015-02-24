@@ -3,7 +3,7 @@ package com.learning.algorithm.array;
 public class SumSubset {
 
 	public static void main(String[] args) {
-		int sum = 30;
+		int sum = 10;
 		
 		int[] array = new int[]{1,2,3,4,5,6,7,8,9};
 		
@@ -34,7 +34,7 @@ public class SumSubset {
 			
 			//System.out.println("current idx: " + i + " ,StartIdx: " + startIdx + " , value: " + array[i] + " ,currentSum: " + currentSum);
 			
-			printSubset(array, startIdx + 1, endIdx, currentSum, target, solution);
+			printSubset(array, i + 1, endIdx, currentSum, target, solution);
 			
 			solution[i] = 0; //reset
 			
@@ -42,7 +42,7 @@ public class SumSubset {
 			
 			//System.out.println("Not valid idx: " + i + " ,currentSum: " + currentSum );
 			
-			startIdx++;
+			//startIdx++;
 		}
 	}
 

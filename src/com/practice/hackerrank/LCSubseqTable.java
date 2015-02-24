@@ -3,7 +3,7 @@ package com.practice.hackerrank;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LCStable {
+public class LCSubseqTable {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
