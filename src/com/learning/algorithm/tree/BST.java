@@ -102,6 +102,23 @@ public class BST<T extends Comparable<T>> {
 
 		tree.traverseInVerticalOrder(root, map, 0);
 		tree.printMap(map);
+		
+		// root node
+		Node<Integer> rootalt = new Node<Integer>(60);
+
+		// insert nodes
+		tree.insertNode(rootalt, 20);
+		tree.insertNode(rootalt, 22);
+		tree.insertNode(rootalt, 8);
+		tree.insertNode(rootalt, 9);
+		tree.insertNode(rootalt, 21);
+		
+		map = new TreeMap<Integer, ArrayList<Integer>>();
+
+		tree.traverseInVerticalOrder(rootalt, map, 0);
+				
+		System.out.println("Bottom view");
+		tree.printBottomView(map);
 
 		// is same check
 		// root node
@@ -785,6 +802,15 @@ public class BST<T extends Comparable<T>> {
 			}
 
 			System.out.println();
+		}
+	}
+	
+	// print contents of TreeMap of lists
+	void printBottomView(TreeMap<Integer, ArrayList<T>> map) {
+		System.out.println();
+
+		for (ArrayList<T> list : map.values()) {
+			System.out.print(list.get(list.size() - 1) + " ");
 		}
 	}
 

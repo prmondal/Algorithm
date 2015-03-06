@@ -134,6 +134,78 @@ public class SLL<T extends Comparable<T>> {
 		
 		System.out.println("\nSecond list: ");
 		sll.printSLL(b);
+		
+		//add numbers
+		Node<Integer> aa = new Node<Integer>(9);
+		Node<Integer> bb = new Node<Integer>(9);
+		
+		sll.insertNode(aa, 9);
+		sll.insertNode(aa, 9);
+		
+		sll.insertNode(bb, 9);
+		sll.insertNode(bb, 9);
+		
+		Node<Integer> sumHead = sll.getSum(aa, bb, new Sum());
+		
+		//print sum
+		System.out.println("\nSum of 999 and 999: ");
+		sll.printSLL(sumHead);
+	}
+	
+	//linked list size
+	private int getSize(Node<T> head) {
+		int size = 0;
+		
+		if(head == null)
+			return size;
+		
+		while(head != null) {
+			head = head.next;
+			size++;
+		}
+		
+		return size;
+	}
+	
+	private Node<Integer> getSum(Node<T> h1, Node<T> h2, Sum s) {
+		int l = getSize(h1);
+		int m = getSize(h2);
+		
+		Node<Integer> result = null;
+		
+		if(l == m) {
+			result = getSameSum(h1, h2, s);
+		}
+			
+		if(s.carry != 0 && result != null) {
+			Node<Integer> _new = new Node<Integer>(s.carry);
+			
+			_new.next = result;
+			result = _new;
+		} 
+		
+		return result;
+	}
+
+	//get sum of equal length numbers
+	private Node<Integer> getSameSum(Node<T> h1, Node<T> h2, Sum s) {
+		if(h1 == null) {
+			return null;
+		}
+		
+		Node<Integer> result = new Node<Integer>();
+		
+		result.next = getSameSum(h1.next, h2.next, s);
+		
+		//add sum to the result node and update carry
+		int sum = (Integer) h1.key + (Integer) h2.key + s.carry;
+		
+		s.carry = sum / 10;
+		sum = sum % 10;
+		
+		result.key = sum;
+		
+		return result;
 	}
 
 	private Node<T> alternateJoin(Node<T> a, Node<T> b) {
@@ -411,6 +483,11 @@ public class SLL<T extends Comparable<T>> {
 			this.key = key;
 			this.next = null;
 		}
+	}
+	
+	static class Sum {
+		int carry = 0;
+		int sum = 0;
 	}
 }
 
