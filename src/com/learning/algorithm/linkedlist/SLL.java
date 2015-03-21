@@ -127,6 +127,10 @@ public class SLL<T extends Comparable<T>> {
 		sll.insertNode(b, 90);
 		sll.insertNode(b, 100);
 		
+		b = sll.reverseSLLRecursive(b);
+		System.out.println("BBBB\n");
+		sll.printSLL(b);
+		
 		//join two ll
 		b = sll.alternateJoin(a, b);
 		System.out.println("\nFirst list: ");
@@ -411,6 +415,30 @@ public class SLL<T extends Comparable<T>> {
 		q.next = p;
 
 		return q;
+	}
+	
+	//recursive reverse
+	Node<T> reverseSLLRecursive(Node<T> head) {
+		if(head == null)
+			return null;
+		
+		Node<T> first;
+		Node<T> rest;
+		
+		first = head;
+		rest = head.next;
+		
+		if(rest == null)
+			return head;
+		
+		reverseSLLRecursive(rest);
+		
+		first.next.next = first;
+		first.next = null;
+		
+		head = rest;
+		
+		return head;
 	}
 	
 	Node<T> mergeSort(Node<T> head) {

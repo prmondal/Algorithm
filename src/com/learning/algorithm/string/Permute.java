@@ -13,13 +13,13 @@ public class Permute {
 
 	}
 
-	private static void permute(String str, int i, int n) {
-		if(i == n) {
+	private static void permute(String str, int low, int high) {
+		if(low == high) {
 			System.out.println(str);
 		} else {
-			for(int j = i; j <= n; j++) {
-				String s = swap(str, i, j);
-				permute(s, i + 1, n);
+			for(int j = low; j <= high; j++) {
+				String s = swap(str, low, high);
+				permute(s, low + 1, high);
 			}
 		}
 		

@@ -1,7 +1,10 @@
 package com.learning.algorithm.graph;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Stack;
 
 public class Graph {
 	private final int V;
@@ -43,26 +46,28 @@ public class Graph {
 	}
 
 	public static void main(String[] args) {
-		/*
-		 * Scanner sc = new Scanner(System.in);
-		 * 
-		 * int v = sc.nextInt();
-		 * 
-		 * Graph g = new Graph(v);
-		 * 
-		 * // get edges for (int n = 0; n < v; n++) { g.addEdge(sc.nextInt(),
-		 * sc.nextInt()); }
-		 */
-
-		Graph g = new Graph(6);
-		g.addEdge(0, 1);
+		Graph g = new Graph(7);
+		
+		/*g.addEdge(0, 1);
 		g.addEdge(1, 3);
 		g.addEdge(3, 5);
 		g.addEdge(0, 2);
 		g.addEdge(2, 4);
 		g.addEdge(4, 5);
-		g.addEdge(2, 5);
-
+		g.addEdge(2, 5);*/
+		
+		g.addEdge(0, 1);
+		g.addEdge(0, 5);
+		g.addEdge(0, 2);
+		g.addEdge(1, 4);
+		g.addEdge(3, 2);
+		g.addEdge(3, 5);
+		g.addEdge(3, 6);
+		g.addEdge(3, 4);
+		g.addEdge(5, 2);
+		g.addEdge(6, 0);
+		g.addEdge(6, 4);
+		
 		g.printGraph();
 
 		int v = g.getV();
@@ -80,6 +85,55 @@ public class Graph {
 
 		// print all path to destination from source
 		g.printAllPaths(g, 0, v - 1, new ArrayList<Integer>(), visited);
+
+		// topological sort
+		doTopologicalOrdering(g);
+	}
+
+	private static void printStack(Stack<Integer> stack) {
+		ListIterator<Integer> it = stack.listIterator(stack.size());
+		
+		while(it.hasPrevious()) {
+			System.out.print(it.previous() + " -> ");
+		} 
+	}
+
+	//considering graph is acyclic
+	private static void doTopologicalOrdering(Graph g) {
+		int V = g.getV();
+		
+		if(V == 0)
+			return;
+		
+		Stack<Integer> stack = new Stack<Integer>();
+
+		boolean[] visited = new boolean[V];
+		
+		for(int i = 0; i < V; i++) {
+			if(!visited[i]) {
+				dfs(g, i, visited, stack);
+			}
+		}
+		
+		//print topological ordering
+		System.out.println("\n === Topological ordering of nodes ===");
+		printStack(stack);
+	}
+
+	private static void dfs(Graph g, int i, boolean[] visited, Stack<Integer> stack) {
+		//node is visited
+		visited[i] = true;
+		
+		List<Integer> list = g.getAdjNodes(i);
+		
+		for(int n : list) {
+			if(!visited[n]) {
+				dfs(g, n, visited, stack);
+			}
+		}
+		
+		//push node to the stack if node is already visited or is a leaf node (no outgoing edges) 
+		stack.add(i);
 	}
 
 	private static boolean isCyclicUtil(Graph g, boolean[] visited,

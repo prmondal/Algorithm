@@ -18,7 +18,7 @@ public class Trie {
 		insert(head, "i");
 		insert(head, "in");
 
-		System.out.println(find(head, "inn"));
+		System.out.println(find(head, "toy"));
 
 		System.out.println(countStartWithPrefix(head, "tt"));
 
@@ -27,6 +27,9 @@ public class Trie {
 
 	private static void insert(Node root, String key) {
 		Node current = root;
+		
+		if(current == null)
+			return;
 
 		int length = key.length();
 

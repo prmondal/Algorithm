@@ -1,6 +1,7 @@
 package com.learning.algorithm.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,7 +24,7 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(root, 30);
 		tree.insertNode(root, 70);
 		tree.insertNode(root, 100);
-		
+
 		// traversal
 		tree.printInOrder(root);
 		System.out.println();
@@ -63,7 +64,7 @@ public class BST<T extends Comparable<T>> {
 
 		// print level order line by line
 		tree.printLevelOrderLinebyLine(root);
-		
+
 		tree.printZigZag(root);
 
 		// lca
@@ -102,7 +103,7 @@ public class BST<T extends Comparable<T>> {
 
 		tree.traverseInVerticalOrder(root, map, 0);
 		tree.printMap(map);
-		
+
 		// root node
 		Node<Integer> rootalt = new Node<Integer>(60);
 
@@ -112,11 +113,11 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(rootalt, 8);
 		tree.insertNode(rootalt, 9);
 		tree.insertNode(rootalt, 21);
-		
+
 		map = new TreeMap<Integer, ArrayList<Integer>>();
 
 		tree.traverseInVerticalOrder(rootalt, map, 0);
-				
+
 		System.out.println("Bottom view");
 		tree.printBottomView(map);
 
@@ -133,12 +134,6 @@ public class BST<T extends Comparable<T>> {
 
 		System.out.println(tree.isSame(root, root11));
 
-		// print left view
-		if (root != null) {
-			System.out.print(root.key + " ");
-			tree.printLeftView(root);
-		}
-		
 		// root node
 		Node<Integer> root12 = new Node<Integer>(100);
 
@@ -149,16 +144,109 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(root12, 200);
 		tree.insertNode(root12, 150);
 		tree.insertNode(root12, 300);
-		
+
 		System.out.println();
 		tree.toSumTree(root12);
 		tree.printInOrder(root12);
-		
-		//array to BST
-		int[] arr = {1,2,3,4,5,6,7,8};
+
+		// array to BST
+		int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8 };
 		Node<Integer> r = tree.arrayToBST(arr, 0, arr.length - 1);
-		
+
 		tree.printInOrder(r);
+
+		Node<Integer> root22 = new Node<Integer>(100);
+
+		// insert nodes
+		tree.insertNode(root22, 50);
+		tree.insertNode(root22, 20);
+		tree.insertNode(root22, 60);
+		tree.insertNode(root22, 200);
+		tree.insertNode(root22, 150);
+		tree.insertNode(root22, 300);
+
+		/*
+		 * 100 50 200 20 60 150 300
+		 */
+
+		// print left view
+		System.out.println("\nLeft view: ");
+		tree.printLeftView(root22, new Level(), 0);
+		tree.printLeftView(root22);
+
+		// System.out.println("\nisSibling: " + tree.isSibling(root22, 50,
+		// 200));
+		System.out.println("\nisCousin: " + tree.isCousinNode(root22, 50, 60));
+
+		// successor/predecessor
+		Integer[] result = new Integer[2];
+		Arrays.fill(result, 0);
+
+		tree.getSuccPred(root22, 150, result);
+
+		if (result[0] != 0) {
+			System.out.println("Predecessor is " + result[0]);
+		} else {
+			System.out.println("No Predecessor found!");
+		}
+
+		if (result[1] != 0) {
+			System.out.println("Successor is " + result[1]);
+		} else {
+			System.out.println("No successor found!");
+		}
+
+		// print minimum sum path
+		System.out.println("\n==== Minimum Sum Path ====");
+		Node<Integer> root23 = new Node<Integer>(50);
+
+		// insert nodes
+		tree.insertNode(root23, 40);
+		tree.insertNode(root23, 90);
+		tree.insertNode(root23, 30);
+		tree.insertNode(root23, 10);
+		tree.insertNode(root23, 45);
+
+		Level l = new Level();
+		tree.printMinimumSumPath(root23, 130, l, 0, new ArrayList<Integer>());
+		System.out.println("\nMinimum path length: "
+				+ ((l.minPathLength != Integer.MAX_VALUE) ? l.minPathLength
+						: "No path found!"));
+		
+		//order statistics
+		System.out.println("\n === Order statistics ===");
+		Node<Integer> root24 = new Node<Integer>(20);
+
+		// insert node
+		tree.insertNode(root24, 8);
+		tree.insertNode(root24, 4);
+		tree.insertNode(root24, 12);
+		tree.insertNode(root24, 10);
+		tree.insertNode(root24, 14);
+		tree.insertNode(root24, 30);
+		tree.insertNode(root24, 25);
+		tree.insertNode(root24, 40);
+		
+		//print kth largest
+		tree.printKthLargest(root24, 7, new Count());
+		
+		//print kth smallest
+		tree.printKthSmallest(root24, 5, new Count());
+		
+		//remove single child nodes
+		System.out.println("\n === Remove single child nodes ===");
+		Node<Integer> r1 = new Node<Integer>(20);
+
+		// insert node
+		tree.insertNode(r1, 30);
+		tree.insertNode(r1, 40);
+		tree.insertNode(r1, 8);
+		tree.insertNode(r1, 4);
+		tree.insertNode(r1, 10);
+		
+		r1 = tree.removeSingleChildNodes(r1);
+		
+		tree.printInOrder(r1);
 	}
 
 	private void printDLL(Node<T> head) {
@@ -323,7 +411,7 @@ public class BST<T extends Comparable<T>> {
 
 	void printLevelOrderLinebyLine(Node<T> root) {
 		System.out.println("\nPrint line by line");
-		
+
 		if (root == null)
 			return;
 
@@ -343,12 +431,12 @@ public class BST<T extends Comparable<T>> {
 				Node<T> front = Q.poll();
 
 				System.out.print(front.key + " ");
-				
+
 				if (front.right != null)
 					Q.add(front.right);
-				
+
 				if (front.left != null)
-					Q.add(front.left);				
+					Q.add(front.left);
 
 				count--;
 			}
@@ -356,44 +444,43 @@ public class BST<T extends Comparable<T>> {
 			System.out.println();
 		}
 	}
-	
+
 	void printZigZag(Node<T> root) {
 		System.out.println("\nPrint ZigZag: ");
-		
-		
+
 	}
-	
+
 	void printZigZag2(Node<T> root) {
 		System.out.println("\nPrint ZigZag: ");
-		
-		if(root == null)
+
+		if (root == null)
 			return;
-		
+
 		int h = height(root);
 		boolean leftToRight = true;
-		
-		for(int i = 1; i <= h; i++) {
+
+		for (int i = 1; i <= h; i++) {
 			printLevel(root, i, leftToRight);
-			
+
 			leftToRight = !leftToRight;
-			
+
 			System.out.println("\n");
 		}
 	}
 
 	private void printLevel(Node<T> root, int i, boolean leftToRight) {
-		if(root == null)
+		if (root == null)
 			return;
-		
-		if(i == 0)
+
+		if (i == 0)
 			return;
-		
-		if(i == 1) {
+
+		if (i == 1) {
 			System.out.print(root.key + " ");
 			return;
 		}
-		
-		if(leftToRight) {
+
+		if (leftToRight) {
 			printLevel(root.left, i - 1, leftToRight);
 			printLevel(root.right, i - 1, leftToRight);
 		} else {
@@ -804,7 +891,7 @@ public class BST<T extends Comparable<T>> {
 			System.out.println();
 		}
 	}
-	
+
 	// print contents of TreeMap of lists
 	void printBottomView(TreeMap<Integer, ArrayList<T>> map) {
 		System.out.println();
@@ -830,78 +917,319 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	// left view of tree
-	void printLeftView(Node<T> root) {
+	// recursive
+	void printLeftView(Node<T> root, Level l, int currLevel) {
 		if (root == null)
 			return;
 
-		if (root.left != null) {
-			System.out.print(root.left.key + " ");
-
-			printLeftView(root.left);
-		} else if (root.right != null) {
-			System.out.print(root.right.key + " ");
-
-			printLeftView(root.right);
-		}
-	}
-
-	// left view of tree
-	// NEED TO CHECK
-	void printLeftView(Node<T> root, int maxL, int currentL) {
-		if (root == null)
-			return;
-
-		if (currentL > maxL) {
-			maxL = currentL;
+		if (l.maxLevel < currLevel) {
+			l.maxLevel = currLevel;
 
 			System.out.print(root.key + " ");
 		}
 
-		printLeftView(root.left, maxL, currentL + 1);
-		printLeftView(root.right, maxL, currentL + 1);
+		// recur to left and right subtrees
+		printLeftView(root.left, l, currLevel + 1);
+		printLeftView(root.right, l, currLevel + 1);
 	}
-	
+
+	void printLeftView(Node<T> root) {
+		if (root == null) {
+			return;
+		}
+
+		Queue<Node<T>> queue = new LinkedList<Node<T>>();
+
+		queue.add(root);
+		queue.add(null); // sentinel node
+
+		System.out.print(root.key + " ");
+
+		// while sentinel node found next node is left node in that level if the
+		// queue is not empty
+		while (!queue.isEmpty()) {
+			Node<T> front = queue.poll();
+
+			// sentinel node found
+			if (front == null) {
+				if (queue.isEmpty())
+					break;
+
+				queue.add(null);
+				System.out.print(queue.peek().key + " ");
+			} else {
+				if (front.left != null)
+					queue.add(front.left);
+
+				if (front.right != null)
+					queue.add(front.right);
+			}
+		}
+	}
+
 	int toSumTree(Node<Integer> root) {
-		if(root == null) 
+		if (root == null)
 			return 0;
-		
+
 		int l = (Integer) toSumTree(root.left);
 		int r = (Integer) toSumTree(root.right);
 		int old = root.key;
-		
+
 		root.key = l + r;
 		return root.key + old;
 	}
-	
+
 	private Node<Integer> arrayToBST(int[] array, int l, int h) {
-		if(array.length == 0 || l > h )
+		if (array.length == 0 || l > h)
 			return null;
-		
+
 		int mid = l + (h - l) / 2;
-		
+
 		Node<Integer> root = new Node<Integer>(array[mid]);
-		
+
 		root.left = arrayToBST(array, l, mid - 1);
 		root.right = arrayToBST(array, mid + 1, h);
+
+		return root;
+	}
+
+	private boolean isCousinNode(Node<T> root, T a, T b) {
+		if (root == null)
+			return false;
+
+		int la = getLevel(root, a, 0);
+		int lb = getLevel(root, b, 0);
+
+		// not at same level
+		if (la == lb && !isSibling(root, a, b)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isSibling(Node<T> root, T a, T b) {
+		if (root == null)
+			return false;
+
+		if (root.left == null || root.right == null)
+			return false;
+
+		if ((root.left.key.compareTo(a) == 0 && root.right.key.compareTo(b) == 0)
+				|| (root.left.key.compareTo(b) == 0 && root.right.key
+						.compareTo(a) == 0))
+			return true;
+
+		return isSibling(root.left, a, b) || isSibling(root.right, a, b);
+	}
+
+	private int getLevel(Node<T> root, T n, int level) {
+		if (root == null)
+			return -1;
+
+		if (root.key.compareTo(n) == 0) {
+			return level;
+		}
+
+		return Math.max(getLevel(root.left, n, level + 1),
+				getLevel(root.right, n, level + 1));
+	}
+
+	private void getSuccPred(Node<T> root, T n, T[] result) {
+		if (root == null)
+			return;
+
+		Node<T> current = null;
+
+		// if root is equal to n
+		if (root.key.compareTo(n) == 0) {
+			// get rightmost node of left sub tree
+			if (root.left != null) {
+				current = root.left;
+
+				for (; current.right != null; current = current.right)
+					;
+
+				// store predecessor
+				result[0] = current.key;
+			}
+
+			// get leftmost node of right subtree
+			if (root.right != null) {
+				current = root.right;
+
+				for (; current.left != null; current = current.left)
+					;
+
+				// store predecessor
+				result[1] = current.key;
+			}
+
+			return;
+		}
+
+		// if the key is less than root
+		if (root.key.compareTo(n) > 0) {
+			// set successor to root
+			result[1] = root.key;
+
+			// recur for left subtree
+			getSuccPred(root.left, n, result);
+		} else {
+			// set predecessor to root
+			result[0] = root.key;
+
+			// recur for right subtree
+			getSuccPred(root.right, n, result);
+		}
+	}
+
+	// print minimum sum path
+	void printMinimumSumPath(Node<T> root, int sum, Level l, int pathLength,
+			ArrayList<T> list) {
+		// root is null
+		// root value is greater than sum
+		// root value is same as sum and non leaf node
+		if (root == null
+				|| (Integer) root.key > sum
+				|| ((root.left != null || root.right != null) && (Integer) root.key == sum)) {
+			return;
+		}
+
+		// add to list
+		list.add(root.key);
+
+		// increase path length
+		pathLength++;
+
+		// leaf node found
+		if (root.left == null && root.right == null) {
+			// if path found with the sum
+			if ((Integer) root.key == sum) {
+				// update minimum
+				if(l.minPathLength > pathLength) {
+					l.minPathLength = pathLength;
+					
+					// print path
+					printPathList(list, pathLength);
+				}
+				
+				return;
+			}
+		}
+
+		// update remaining sum
+		sum = sum - (Integer) root.key;
+
+		// if right node key is greater than remaining sum
+		// recur to left
+		if (root.right != null && (Integer) root.right.key > sum) {
+			// if left key is less than current sum
+			if (root.left != null && (Integer) root.left.key <= sum) {
+				printMinimumSumPath(root.left, sum, l, pathLength, list);
+			}
+		} else {
+			// recur both
+			printMinimumSumPath(root.left, sum, l, pathLength, list);
+			printMinimumSumPath(root.right, sum, l, pathLength, list);
+		}
+	}
+	
+	//k-th largest in BST
+	private void printKthLargest(Node<T> root, int k, Count count) {
+		if(root == null || k < 0)
+			return;
+		
+		printKthLargest(root.right, k, count);
+		
+		//increment count
+		count.c++;
+		
+		//current node is kth largest. Print and return
+		if(k == count.c) {
+			System.out.println("kth largest key is " + root.key);
+			
+			return;
+		}
+		
+		printKthLargest(root.left, k, count);
+	}
+	
+	//k-th largest in BST
+	private void printKthSmallest(Node<T> root, int k, Count count) {
+		if(root == null || k < 0)
+			return;
+		
+		printKthSmallest(root.left, k, count);
+		
+		//increment count
+		count.c++;
+		
+		//current node is kth largest. Print and return
+		if(k == count.c) {
+			System.out.println("kth largest key is " + root.key);
+			
+			return;
+		}
+		
+		printKthSmallest(root.right, k, count);
+	}
+	
+	//do post order traversal and remove nodes with single child
+	private Node<T> removeSingleChildNodes(Node<T> root) {
+		if(root == null)
+			return null;
+		
+		root.left = removeSingleChildNodes(root.left);
+		root.right = removeSingleChildNodes(root.right);
+		
+		//do not remove leaf nodes
+		if(root.left == null && root.right == null) 
+			return root;
+		
+		//node with child found
+		//single child node found
+		if(root.right == null) {
+			Node<T> left = root.left;
+			root.left = null;
+			root = left;
+		} else if(root.left == null) {
+			Node<T> right = root.right;
+			root.right = null;
+			root = right;
+		}
 		
 		return root;
 	}
-}
 
-class Node<T extends Comparable<T>> {
-	T key;
+	static class Node<T extends Comparable<T>> {
+		T key;
 
-	Node<T> left;
-	Node<T> right;
+		Node<T> left;
+		Node<T> right;
 
-	Node() {
+		Node() {
 
+		}
+
+		Node(T key) {
+			this.key = key;
+
+			this.left = null;
+			this.right = null;
+		}
 	}
 
-	Node(T key) {
-		this.key = key;
-
-		this.left = null;
-		this.right = null;
+	static class Level {
+		int maxLevel = Integer.MIN_VALUE;
+		int minPathLength = Integer.MAX_VALUE;
+	}
+	
+	static class Count {
+		int c = 0;
+		
+		Count() {
+			c = 0;
+		}
 	}
 }

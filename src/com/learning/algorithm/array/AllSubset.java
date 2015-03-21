@@ -15,8 +15,8 @@ public class AllSubset {
 		int[] solution = new int[str.length()];
 		
 		
-		//printAllSubset(str.toCharArray(), 0, str.length() - 1);
-		printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
+		printAllSubset(str.toCharArray(), 0, str.length() - 1);
+		//printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
 
 	}
 

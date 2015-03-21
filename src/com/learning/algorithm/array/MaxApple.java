@@ -17,7 +17,7 @@ public class MaxApple {
 		int N = grid.length;
 		int M = grid[0].length;
 		
-		int[][] table = new int[N + 1][M + 1];
+		int[][] table = new int[N][M];
 		
 		table[0][0] = grid[0][0];
 		

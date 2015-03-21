@@ -1,9 +1,11 @@
 package com.learning.algorithm.file;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -30,13 +32,20 @@ public class FIleReader {
 			e.printStackTrace();
 		}*/
 		
-		Scanner sc = new Scanner(new File("test.txt"));
+		/*Scanner sc = new Scanner(new File("test.txt"));
 		
 		while(sc.hasNextLine()) {
 			String line = sc.nextLine().trim();
 			
 			System.out.println(line);
-		}
+		}*/
+		
+		File f = new File("test.txt");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f.getAbsoluteFile()));
+		
+		bw.write("Hello Prasdlklskdssenjit");
+		
+		bw.close();
 	}
 
 }

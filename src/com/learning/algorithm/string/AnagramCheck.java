@@ -22,7 +22,7 @@ public class AnagramCheck {
 		
 		//printPairs(list);
 		
-		System.out.println(checkAnagram("aabbcc", "abbcc", 4, 3));
+		System.out.println(checkAnagram("aabbcc", "abbbcc", 6, 6));
 	}
 	
 	private static void printPairs(String[] list) {
