@@ -1,4 +1,4 @@
-package com.learning.algorithm.backtrack;
+package com.learning.algorithm.backtracking;
 
 public class SudukuSolver {
 

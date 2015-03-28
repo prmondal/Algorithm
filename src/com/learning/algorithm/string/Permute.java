@@ -18,7 +18,7 @@ public class Permute {
 			System.out.println(str);
 		} else {
 			for(int j = low; j <= high; j++) {
-				String s = swap(str, low, high);
+				String s = swap(str, low, j);
 				permute(s, low + 1, high);
 			}
 		}

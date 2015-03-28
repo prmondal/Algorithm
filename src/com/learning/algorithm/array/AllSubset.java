@@ -42,7 +42,7 @@ public class AllSubset {
 		int l = array.length;
 		
 		for(int i = 0; i < l; i++) {
-			System.out.print((solution[i] == 1) ? array[i] + ", " : "");
+			System.out.print((solution[i] == 1) ? array[i] : "");
 		}
 		
 		System.out.println();
@@ -63,7 +63,7 @@ public class AllSubset {
 
 	private static void printSubSet(Stack<Character> stack) {
 		for(Character c: stack) {
-			System.out.print(c + " ");
+			System.out.print(c);
 		}
 		
 		System.out.println();

@@ -1,7 +1,6 @@
 package com.learning.algorithm.graph;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Stack;
@@ -9,10 +8,12 @@ import java.util.Stack;
 public class Graph {
 	private final int V;
 	private List<Integer>[] adj;
+	private boolean isDirected;
 
 	@SuppressWarnings("unchecked")
-	Graph(int V) {
+	Graph(int V, boolean isDirected) {
 		this.V = V;
+		this.isDirected = isDirected;
 
 		adj = (ArrayList<Integer>[]) new ArrayList[V];
 
@@ -23,6 +24,9 @@ public class Graph {
 
 	void addEdge(int u, int v) {
 		adj[u].add(v);
+
+		if (!isDirected)
+			adj[v].add(u);
 	}
 
 	void printGraph() {
@@ -45,103 +49,107 @@ public class Graph {
 		return adj[i];
 	}
 
-	public static void main(String[] args) {
-		Graph g = new Graph(7);
-		
-		/*g.addEdge(0, 1);
-		g.addEdge(1, 3);
-		g.addEdge(3, 5);
-		g.addEdge(0, 2);
-		g.addEdge(2, 4);
-		g.addEdge(4, 5);
-		g.addEdge(2, 5);*/
-		
-		g.addEdge(0, 1);
-		g.addEdge(0, 5);
-		g.addEdge(0, 2);
-		g.addEdge(1, 4);
-		g.addEdge(3, 2);
-		g.addEdge(3, 5);
-		g.addEdge(3, 6);
-		g.addEdge(3, 4);
-		g.addEdge(5, 2);
-		g.addEdge(6, 0);
-		g.addEdge(6, 4);
-		
-		g.printGraph();
-
-		int v = g.getV();
-
-		boolean[] visited = new boolean[v];
-		boolean[] inStack = new boolean[v];
-
-		if (isCyclicUtil(g, visited, inStack)) {
-			System.out.println("Graph has cycle.");
-		} else {
-			System.out.println("Graph does not have cycle.");
-		}
-
-		visited = new boolean[v];
-
-		// print all path to destination from source
-		g.printAllPaths(g, 0, v - 1, new ArrayList<Integer>(), visited);
-
-		// topological sort
-		doTopologicalOrdering(g);
-	}
-
 	private static void printStack(Stack<Integer> stack) {
 		ListIterator<Integer> it = stack.listIterator(stack.size());
-		
-		while(it.hasPrevious()) {
+
+		while (it.hasPrevious()) {
 			System.out.print(it.previous() + " -> ");
-		} 
+		}
 	}
 
-	//considering graph is acyclic
+	// considering graph is acyclic
 	private static void doTopologicalOrdering(Graph g) {
 		int V = g.getV();
-		
-		if(V == 0)
+
+		if (V == 0)
 			return;
-		
+
 		Stack<Integer> stack = new Stack<Integer>();
 
 		boolean[] visited = new boolean[V];
-		
-		for(int i = 0; i < V; i++) {
-			if(!visited[i]) {
+
+		for (int i = 0; i < V; i++) {
+			if (!visited[i]) {
 				dfs(g, i, visited, stack);
 			}
 		}
-		
-		//print topological ordering
-		System.out.println("\n === Topological ordering of nodes ===");
+
+		// print topological ordering
+		System.out.println("\n === Topological order of nodes ===");
 		printStack(stack);
 	}
 
-	private static void dfs(Graph g, int i, boolean[] visited, Stack<Integer> stack) {
-		//node is visited
+	private static void dfs(Graph g, int i, boolean[] visited,
+			Stack<Integer> stack) {
+		// node is visited
 		visited[i] = true;
-		
+
 		List<Integer> list = g.getAdjNodes(i);
-		
-		for(int n : list) {
-			if(!visited[n]) {
+
+		for (int n : list) {
+			if (!visited[n]) {
 				dfs(g, n, visited, stack);
 			}
 		}
-		
-		//push node to the stack if node is already visited or is a leaf node (no outgoing edges) 
+
+		// push node to the stack if adjacent node is already visited or current
+		// node is a leaf node (no outgoing edges)
 		stack.add(i);
 	}
 
-	private static boolean isCyclicUtil(Graph g, boolean[] visited,
-			boolean[] inStack) {
+	// detect cycle in directed graph
+	private static boolean isCyclicUtilUndirected(Graph g) {
 		int V = g.getV();
 
+		boolean[] visited = new boolean[V];
+
 		for (int i = 0; i < V; i++) {
-			if (isCyclic(g, i, visited, inStack)) {
+			if (!visited[i]) {
+				if (isCyclicUndirected(g, i, visited, -1))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean isCyclicUndirected(Graph g, int n,
+			boolean[] visited, int parent) {
+		// mark current node is visited
+		visited[n] = true;
+
+		for (int i : g.getAdjNodes(n)) {
+			// System.out.println("Adjacent node: " + i + "| Parent: " + n);
+			// if the node not visited recur from this node to detect cycle
+			if (!visited[i]) {
+				// System.out.println("Adjacent node " + i + " is not visted.");
+				if (isCyclicUndirected(g, i, visited, n))
+					return true;
+			} else {
+
+				// System.out.println("Adjacent node " + i
+				// + " is visted. Parent is " + parent);
+
+				// the node is visited and is not the parent cycle is detected
+				if (i != parent) {
+					// System.out.println("Adjacent node " + i + "| Parent: "
+					// + parent + " == Mismatch.");
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean isCyclicUtilDirected(Graph g) {
+		int V = g.getV();
+
+		boolean[] visited = new boolean[V];
+		boolean[] inStack = new boolean[V];
+
+		for (int i = 0; i < V; i++) {
+			if (!visited[i] && isCyclicDirected(g, i, visited, inStack)) {
 				return true;
 			}
 		}
@@ -149,7 +157,7 @@ public class Graph {
 		return false;
 	}
 
-	private static boolean isCyclic(Graph g, int i, boolean[] visited,
+	private static boolean isCyclicDirected(Graph g, int i, boolean[] visited,
 			boolean[] inStack) {
 		// node is visited
 		visited[i] = true;
@@ -159,7 +167,7 @@ public class Graph {
 		List<Integer> adjNodes = g.getAdjNodes(i);
 
 		for (int n : adjNodes) {
-			if (!visited[n] && isCyclic(g, n, visited, inStack))
+			if (!visited[n] && isCyclicDirected(g, n, visited, inStack))
 				return true;
 			else if (inStack[n])
 				return true;
@@ -212,4 +220,44 @@ public class Graph {
 		}
 	}
 
+	public static void main(String[] args) {
+		System.out.println("\n === Directed graph edges === ");
+		Graph g = new Graph(7, true);
+		g.addEdge(0, 1);
+		g.addEdge(1, 2);
+		g.printGraph();
+
+		System.out.println("\n === Cycle detection check ===");
+
+		if (isCyclicUtilDirected(g)) {
+			System.out.println("Graph has cycle.");
+		} else {
+			System.out.println("Graph does not have cycle.");
+		}
+
+		int v = g.getV();
+		boolean[] visited = new boolean[v];
+
+		// print all path to destination from source
+		System.out.println("\n === Print all paths === ");
+		g.printAllPaths(g, 0, v - 1, new ArrayList<Integer>(), visited);
+
+		// topological sort
+		doTopologicalOrdering(g);
+
+		System.out.println("\n\n === Undirected graph edges === ");
+
+		Graph g1 = new Graph(3, false);
+		g1.addEdge(0, 1);
+		g1.addEdge(1, 2);
+		g1.addEdge(2, 0);
+		
+		System.out.println("\n === Cycle detection check ===");
+		
+		if (isCyclicUtilUndirected(g1)) {
+			System.out.println("Graph has cycle.");
+		} else {
+			System.out.println("Graph does not have cycle.");
+		}
+	}
 }

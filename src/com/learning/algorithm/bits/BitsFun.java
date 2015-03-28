@@ -12,7 +12,7 @@ public class BitsFun {
 
 	// find length of the integer in number of bits
 	private static int getLength(int n) {
-		return (int) (Math.log((double) n) / Math.log(2.0)) + 1;
+		return (int) Math.ceil(Math.log((double) n) / Math.log(2.0));
 	}
 
 	// reverse integer

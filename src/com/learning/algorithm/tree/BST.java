@@ -2,7 +2,6 @@ package com.learning.algorithm.tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -69,7 +68,7 @@ public class BST<T extends Comparable<T>> {
 
 		// lca
 		System.out.println("LCA of 70 and 100 is "
-				+ tree.lca2(root, 70, 100).key);
+				+ tree.lcaBinaryTree(root, 70, 100).key);
 
 		// print leafs
 		tree.printLeafs(root);
@@ -118,8 +117,13 @@ public class BST<T extends Comparable<T>> {
 
 		tree.traverseInVerticalOrder(rootalt, map, 0);
 
-		System.out.println("Bottom view");
+		System.out.println("\n=== Bottom view === ");
 		tree.printBottomView(map);
+		
+		System.out.println("\n=== Top View === ");
+		tree.printTopView(map);
+		
+		System.out.println(tree.isSibling(rootalt, 8, 9));
 
 		// is same check
 		// root node
@@ -247,6 +251,33 @@ public class BST<T extends Comparable<T>> {
 		r1 = tree.removeSingleChildNodes(r1);
 		
 		tree.printInOrder(r1);
+		
+		//get minimum node in right sub tree
+		System.out.println("\n === Print minimum node in right sub-tree ===");
+		Node<Integer> r2 = new Node<Integer>(20);
+
+		// insert node
+		tree.insertNode(r2, 30);
+		tree.insertNode(r2, 35);
+		tree.insertNode(r2, 40);
+		
+		System.out.println(tree.getMinNodeRightSubTree(r2.right).key);
+		
+		//delete node from tree
+		System.out.println("\n === Delete node from tree ===");
+		Node<Integer> r3 = new Node<Integer>(8);
+
+		// insert node
+		tree.insertNode(r3, 4);
+		tree.insertNode(r3, 2);
+		tree.insertNode(r3, 6);
+		tree.insertNode(r3, 12);
+		tree.insertNode(r3, 10);
+		tree.insertNode(r3, 14);
+		tree.insertNode(r3, 11);
+		tree.insertNode(r3, 13);
+		
+		tree.printInOrder(tree.deleteNode(r3, 4));
 	}
 
 	private void printDLL(Node<T> head) {
@@ -448,11 +479,6 @@ public class BST<T extends Comparable<T>> {
 	void printZigZag(Node<T> root) {
 		System.out.println("\nPrint ZigZag: ");
 
-	}
-
-	void printZigZag2(Node<T> root) {
-		System.out.println("\nPrint ZigZag: ");
-
 		if (root == null)
 			return;
 
@@ -504,7 +530,7 @@ public class BST<T extends Comparable<T>> {
 		return root.key;
 	}
 
-	Node<T> lca2(Node<T> root, T a, T b) {
+	Node<T> lcaBinaryTree(Node<T> root, T a, T b) {
 		if (root == null)
 			return null;
 
@@ -512,8 +538,8 @@ public class BST<T extends Comparable<T>> {
 			return root;
 		}
 
-		Node<T> l = lca2(root.left, a, b);
-		Node<T> r = lca2(root.right, a, b);
+		Node<T> l = lcaBinaryTree(root.left, a, b);
+		Node<T> r = lcaBinaryTree(root.right, a, b);
 
 		if (l != null && r != null) {
 			return root;
@@ -599,11 +625,9 @@ public class BST<T extends Comparable<T>> {
 
 		boolean done = false;
 
-		System.out.println("In order traversal using stack:");
+		System.out.println("\n === In order traversal using stack === ");
 
 		while (!done) {
-			// printStack(stack);
-
 			if (current != null) {
 				stack.push(current);
 				current = current.left;
@@ -827,21 +851,19 @@ public class BST<T extends Comparable<T>> {
 		if (root.left != null) {
 			Node<T> l = toDLL(root.left);
 
-			// get preorder successor of root
-			for (; l.right != null; l = l.right)
-				;
+			// get inorder predecessor of root
+			for (; l.right != null; l = l.right);
 
 			l.right = root;
 			root.left = l;
 		}
 
-		// convert right substree to list
+		// convert right sub tree to list
 		if (root.right != null) {
 			Node<T> r = toDLL(root.right);
 
-			// get preorder successor of root
-			for (; r.left != null; r = r.left)
-				;
+			// get inorder successor of root
+			for (; r.left != null; r = r.left);
 
 			r.left = root;
 			root.right = r;
@@ -851,13 +873,12 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	Node<T> getLeftMostNode(Node<T> root) {
-		for (; root.left != null; root = root.left)
-			;
+		for (; root.left != null; root = root.left);
 
 		return root;
 	}
 
-	// hashmap based
+	// Hash Map based
 	void traverseInVerticalOrder(Node<T> root,
 			TreeMap<Integer, ArrayList<T>> map, int depth) {
 		if (root == null)
@@ -900,6 +921,15 @@ public class BST<T extends Comparable<T>> {
 			System.out.print(list.get(list.size() - 1) + " ");
 		}
 	}
+	
+	//print top view
+	void printTopView(TreeMap<Integer, ArrayList<T>> map) {
+		System.out.println();
+
+		for (ArrayList<T> list : map.values()) {
+			System.out.print(list.get(0) + " ");
+		}
+	}
 
 	// check two tree are same or not
 	boolean isSame(Node<T> root1, Node<T> root2) {
@@ -932,7 +962,8 @@ public class BST<T extends Comparable<T>> {
 		printLeftView(root.left, l, currLevel + 1);
 		printLeftView(root.right, l, currLevel + 1);
 	}
-
+	
+	//non recursive
 	void printLeftView(Node<T> root) {
 		if (root == null) {
 			return;
@@ -1012,11 +1043,8 @@ public class BST<T extends Comparable<T>> {
 		if (root == null)
 			return false;
 
-		if (root.left == null || root.right == null)
-			return false;
-
-		if ((root.left.key.compareTo(a) == 0 && root.right.key.compareTo(b) == 0)
-				|| (root.left.key.compareTo(b) == 0 && root.right.key
+		if ((root.left != null && root.left.key.compareTo(a) == 0 && root.right != null && root.right.key.compareTo(b) == 0)
+				|| (root.left != null && root.left.key.compareTo(b) == 0 && root.right != null && root.right.key
 						.compareTo(a) == 0))
 			return true;
 
@@ -1155,7 +1183,7 @@ public class BST<T extends Comparable<T>> {
 		printKthLargest(root.left, k, count);
 	}
 	
-	//k-th largest in BST
+	//k-th smallest in BST
 	private void printKthSmallest(Node<T> root, int k, Count count) {
 		if(root == null || k < 0)
 			return;
@@ -1200,6 +1228,68 @@ public class BST<T extends Comparable<T>> {
 		}
 		
 		return root;
+	}
+	
+	private Node<T> deleteNode(Node<T> root, int d) {
+		if(root == null)
+			return root;
+		
+		if((Integer) root.key > d) {
+			root.left = deleteNode(root.left, d);
+		} else if((Integer) root.key < d) {
+			root.right = deleteNode(root.right, d);
+		} else {
+			//candidate node is root
+			//case 1: it is leaf node
+			if(root.left == null && root.right == null) {
+				return null;
+			}
+			
+			//case 2: it has single child
+			if(root.left == null) {
+				Node<T> temp = root.right;
+				root.right = null;
+				
+				return temp;
+			}
+			
+			if(root.right == null) {
+				Node<T> temp = root.left;
+				root.left = null;
+				
+				return temp;
+			}
+			
+			//case 3: it has two children
+			Node<T> minNode = getMinNodeRightSubTree(root.right);
+			
+			//assign min node value to root node
+			root.key = minNode.key;
+			
+			//delete min node
+			root.right = deleteNode(root.right, (Integer) minNode.key);
+		}
+		
+		return root;
+	}
+	
+	//utility function to get the minimum value node in the tree
+	private Node<T> getMinNodeRightSubTree(Node<T> root) {
+		if(root == null) {
+			return root;
+		}
+		
+		Node<T> curr = root;
+		
+		//if root does not have left child
+		if(root.left == null) {
+			return root;
+		}
+		
+		//go to extreme left
+		for(; curr.left != null; curr = curr.left);
+		
+		return curr;
 	}
 
 	static class Node<T extends Comparable<T>> {

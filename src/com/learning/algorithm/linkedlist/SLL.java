@@ -127,8 +127,8 @@ public class SLL<T extends Comparable<T>> {
 		sll.insertNode(b, 90);
 		sll.insertNode(b, 100);
 		
+		System.out.println("\n === Reverse using recursion === ");
 		b = sll.reverseSLLRecursive(b);
-		System.out.println("BBBB\n");
 		sll.printSLL(b);
 		
 		//join two ll
@@ -154,6 +154,31 @@ public class SLL<T extends Comparable<T>> {
 		//print sum
 		System.out.println("\nSum of 999 and 999: ");
 		sll.printSLL(sumHead);
+		
+		//check palindrome
+		System.out.println("\n === Check Palindrome === ");
+		Node<Integer> h4 = new Node<Integer>(1);
+
+		// insert nodes
+		sll.insertNode(h4, 2);
+		sll.insertNode(h4, 3);
+		//sll.insertNode(h4, 4);
+		sll.insertNode(h4, 3);
+		sll.insertNode(h4, 2);
+		sll.insertNode(h4, 1);
+		
+		//print list
+		System.out.println(" === Original LL === ");
+		sll.printSLL(h4);
+		
+		if(sll.isPalindrome(h4)) {
+			System.out.println("\nThe LL is a palindrome.");
+		} else {
+			System.out.println("\nThe LL is not a palindrome.");
+		}
+		
+		System.out.println(" === LL is restored === ");
+		sll.printSLL(h4);
 	}
 	
 	//linked list size
@@ -420,7 +445,7 @@ public class SLL<T extends Comparable<T>> {
 	//recursive reverse
 	Node<T> reverseSLLRecursive(Node<T> head) {
 		if(head == null)
-			return null;
+			return head;
 		
 		Node<T> first;
 		Node<T> rest;
@@ -429,14 +454,12 @@ public class SLL<T extends Comparable<T>> {
 		rest = head.next;
 		
 		if(rest == null)
-			return head;
+			return first;
 		
-		reverseSLLRecursive(rest);
+		head = reverseSLLRecursive(rest);
 		
 		first.next.next = first;
 		first.next = null;
-		
-		head = rest;
 		
 		return head;
 	}
@@ -489,14 +512,84 @@ public class SLL<T extends Comparable<T>> {
 		Node<T> result = null;
 		
 		if(a.key.compareTo(b.key) <= 0) {
-			result = a;
-			result.next = mergeSLL(a.next, b);
+			//result = a;
+			a.next = mergeSLL(a.next, b);
+			return a;
 		} else if(a.key.compareTo(b.key) > 0) {
-			result = b;
-			result.next = mergeSLL(a, b.next);
+			//result = b;
+			b.next = mergeSLL(a, b.next);
+			return b;
 		}
 		
 		return result;
+	}
+	
+	private boolean isPalindrome(Node<T> head) {
+		if(head == null || head.next == null)
+			return true;
+		
+		//get middle node of LL
+		Node<T> middle = getMiddleNode(head, true);
+		
+		//reverse linked list from middle element to rest
+		Node<T> head2 = reverseSLL(middle);
+		
+		//check nodes from first list with second list
+		//if the values are not same LL is not palindrome
+		Node<T> curr1 = head;
+		Node<T> curr2 = head2;
+		
+		//when both list has data
+		//second list may have middle element at last. In case of odd length LL last element of second list is not checked
+		while(curr1 != null && curr2 != null) {
+			//mismatch found
+			if(curr1.key.compareTo(curr2.key) != 0) {
+				return false;
+			}
+			
+			curr1 = curr1.next;
+			curr2 = curr2.next;
+		}
+		
+		//restore the LL
+		head2 = reverseSLL(head2);
+		
+		curr1 = head;
+		
+		while(curr1.next != null) {
+			curr1 = curr1.next;
+		}
+		
+		//establish the link
+		curr1.next = head2;
+		
+		return true;
+	}
+	
+	private Node<T> getMiddleNode(Node<T> head, boolean split) {
+		if(head == null)
+			return head;
+		
+		Node<T> slow = head;
+		Node<T> fast = slow.next;
+		
+		while(fast.next != null) {
+			fast = fast.next;
+			
+			if(fast.next != null) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+		}
+		
+		Node<T> temp = slow.next;
+		
+		//if flag is true split the LL
+		if(split) {
+			slow.next = null;
+		}
+		
+		return temp;
 	}
 	
 	static class Node<T extends Comparable<T>> {
