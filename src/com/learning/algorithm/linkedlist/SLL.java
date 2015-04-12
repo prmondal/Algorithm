@@ -196,6 +196,7 @@ public class SLL<T extends Comparable<T>> {
 		return size;
 	}
 	
+	//calculate sum of two same length LL
 	private Node<Integer> getSum(Node<T> h1, Node<T> h2, Sum s) {
 		int l = getSize(h1);
 		int m = getSize(h2);
@@ -204,7 +205,8 @@ public class SLL<T extends Comparable<T>> {
 		
 		if(l == m) {
 			result = getSameSum(h1, h2, s);
-		}
+		} else 
+			return result;
 			
 		if(s.carry != 0 && result != null) {
 			Node<Integer> _new = new Node<Integer>(s.carry);
@@ -348,7 +350,7 @@ public class SLL<T extends Comparable<T>> {
 		}
 
 		// find loop start
-		// count total number os nodes in the loop
+		// count total number of nodes in the loop
 		int count = 0;
 
 		Node<T> p = slow.next;

@@ -97,7 +97,7 @@ public class Graph {
 		stack.add(i);
 	}
 
-	// detect cycle in directed graph
+	// detect cycle in undirected graph
 	private static boolean isCyclicUtilUndirected(Graph g) {
 		int V = g.getV();
 

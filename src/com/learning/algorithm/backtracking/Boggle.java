@@ -25,10 +25,10 @@ public class Boggle {
 		int M = grid.length;
 		int N = grid[0].length;
 		
+		boolean[][] visited = new boolean[M][N];
+		
 		for(int i = 0; i < M; i++) {
 			for(int j = 0; j < N; j++) {
-				boolean[][] visited = new boolean[M][N];
-				
 				findWordsUtil(grid, i, j, M, N, visited, new String());
 			}
 		}

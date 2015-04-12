@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class NQueen {
 
 	public static void main(String[] args) {
-		int N = 4;
+		int N = 8;
 
 		// hold previously queen positions
 		int[] placement = new int[N];
@@ -80,7 +80,7 @@ public class NQueen {
 				}
 				
 				//Need to check
-				System.out.println("row: " + k + ", col: " + j + ": valid");
+				//System.out.println("row: " + k + ", col: " + j + ": valid");
 				
 				// recur from next row
 				if (placeNQueens(k + 1, N, placement)) {

@@ -3,7 +3,7 @@ package com.learning.algorithm.bits;
 public class BitsFun {
 
 	public static void main(String[] args) {
-		int n = 11;
+		int n = 110;
 		System.out.println("Original number: " + Integer.toBinaryString(n));
 		System.out.println("Reverse number: "
 				+ Integer.toBinaryString(reverse(n)));
