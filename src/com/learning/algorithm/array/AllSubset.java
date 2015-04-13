@@ -1,6 +1,5 @@
 package com.learning.algorithm.array;
 
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Stack;
 

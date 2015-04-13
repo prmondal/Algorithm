@@ -1,7 +1,6 @@
 package com.learning.algorithm.array;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class FindSubArraySumToZero {
 

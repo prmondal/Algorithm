@@ -1,6 +1,7 @@
 package com.practice.hackerrank;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class QuickSort {
 

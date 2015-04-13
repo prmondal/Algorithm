@@ -49,26 +49,18 @@ public class MergeSort {
 
 		while (i < l && j < r) {
 			if (L[i] < R[j]) {
-				array[k] = L[i];
-				i++;
+				array[k++] = L[i++];
 			} else {
-				array[k] = R[j];
-				j++;
+				array[k++] = R[j++];
 			}
-
-			k++;
 		}
 
 		while (i < l) {
-			array[k] = L[i];
-			i++;
-			k++;
+			array[k++] = L[i++];
 		}
 
 		while (j < r) {
-			array[k] = R[j];
-			j++;
-			k++;
+			array[k++] = R[j++];
 		}
 	}
 

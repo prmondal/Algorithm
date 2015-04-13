@@ -1,6 +1,5 @@
 package com.practice.hackerrank;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.Scanner;
 
