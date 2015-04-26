@@ -12,12 +12,12 @@ public class BIT1D {
 
 		// initialize BIT for the given array
 		init(A, n);
-
+		
 		// range query
 		rangeSum(A, n, 1, 3);
 		
 		//update value
-		update(A, n, 2, 5);
+		update(n, 2, 5);
 		rangeSum(A, n, 1, 3);
 	}
 
@@ -25,18 +25,18 @@ public class BIT1D {
 		if (i > j || i < 0 || j > n)
 			return;
 
-		System.out.println(query(A, n, j) - query(A, n, i - 1));
+		System.out.println(query(j) - query(i - 1));
 	}
 	
 	//increase by value
-	static void update(int[] A, int n, int i, int v) {
+	static void update(int n, int i, int v) {
 		while (i <= n) {
 			BIT[i] += v;
 			i += i & -i;
 		}
 	}
 
-	static int query(int[] A, int n, int i) {
+	static int query(int i) {
 		int result = 0;
 
 		while (i > 0) {
@@ -49,7 +49,7 @@ public class BIT1D {
 
 	static void init(int[] A, int n) {
 		for (int i = 1; i <= n; i++) {
-			update(A, n, i, A[i - 1]);
+			update(n, i, A[i - 1]);
 		}
 	}
 }

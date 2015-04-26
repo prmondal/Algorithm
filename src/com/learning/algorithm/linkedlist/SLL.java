@@ -449,11 +449,8 @@ public class SLL<T extends Comparable<T>> {
 		if(head == null)
 			return head;
 		
-		Node<T> first;
-		Node<T> rest;
-		
-		first = head;
-		rest = head.next;
+		Node<T> first = head;
+		Node<T> rest = head.next;
 		
 		if(rest == null)
 			return first;

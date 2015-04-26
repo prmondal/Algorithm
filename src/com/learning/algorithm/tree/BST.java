@@ -8,6 +8,8 @@ import java.util.Stack;
 import java.util.TreeMap;
 
 public class BST<T extends Comparable<T>> {
+	static int sum = 0;
+	
 	public static void main(String[] args) {
 		BST<Integer> tree = new BST<Integer>();
 
@@ -278,6 +280,16 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r3, 13);
 		
 		tree.printInOrder(tree.deleteNode(r3, 4));
+		
+		System.out.println("\n === To Sum Tree With Greater Key === ");
+		Node<Integer> r4 = new Node<Integer>(5);
+		tree.insertNode(r4, 2);
+		tree.insertNode(r4, 13);
+		tree.insertNode(r4, 10);
+		
+		tree.toSumTreeWithGreaterKeys(r4);
+		
+		tree.printInOrder(r4);
 	}
 
 	private void printDLL(Node<T> head) {
@@ -1008,6 +1020,19 @@ public class BST<T extends Comparable<T>> {
 
 		root.key = l + r;
 		return root.key + old;
+	}
+	
+	void toSumTreeWithGreaterKeys(Node<Integer> root) {
+		if(root == null)
+			return;
+		
+		toSumTreeWithGreaterKeys(root.right);
+		
+		sum += root.key;
+		
+		root.key = sum;
+		
+		toSumTreeWithGreaterKeys(root.left);
 	}
 
 	private Node<Integer> arrayToBST(int[] array, int l, int h) {
