@@ -33,4 +33,15 @@ public class BitsFun {
 
 		return reverse;
 	}
+
+	static int countOnes(long n) {
+		int count = 0;
+
+		while (n != 0) {
+			count++;
+			n = n & (n - 1);
+		}
+
+		return count;
+	}
 }
