@@ -34,6 +34,7 @@ public class Power {
 	}
 	
 	// binary exponentiation left to right
+	//TODO
 	static long powBELR(int a, int b) {
 		if (b == 0)
 			return 1;

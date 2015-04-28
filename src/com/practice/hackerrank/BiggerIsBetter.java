@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class BiggerIsBetter {
 	public static void main(String[] args) {
-		/*StringBuilder str1 = new StringBuilder("abcd");
-		reverse(4, str1, str1.length());
-		System.out.println(str1.toString());*/
+		StringBuilder str1 = new StringBuilder("abcd");
+		reverse(1, str1, str1.length());
+		System.out.println(str1.toString());
 		Scanner sc = new Scanner(System.in);
 		
 		int t = sc.nextInt();

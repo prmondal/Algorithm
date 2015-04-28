@@ -14,18 +14,18 @@ public class SquareRoot {
 	}
 	
 	//babylonian method
-	private static void printSquareRoot(int number) {
-		float x = number;
+	private static float squareRoot(float n) {
+		float x = n;
 		float y = 1;
 
-		float e = 0.000000001f;
+		float e = 0.000001f;
 
 		while (x - y > e) {
 			x = (x + y) / 2.0f;
-			y = number / x;
+			y = n / x;
 		}
 
-		System.out.println(x);
+		return x;
 	}
 	
 	static void printSquareRoot(float n, float l, float h) {
