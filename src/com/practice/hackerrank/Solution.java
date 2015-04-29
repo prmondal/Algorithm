@@ -1,14 +1,10 @@
 package com.practice.hackerrank;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
 public class Solution {
 	// reverse a string from ith (0 index based) character to end
@@ -217,8 +213,8 @@ public class Solution {
 
 		return true;
 	}
-	
-	//count ones in binary
+
+	// count ones in binary
 	static int countOnes(long n) {
 		int count = 0;
 
@@ -230,10 +226,34 @@ public class Solution {
 		return count;
 	}
 
+	// palindrome check
+	static boolean isPalindrom(String s) {
+		StringBuilder str = new StringBuilder(s);
+		int length = s.length();
+
+		for (int i = 0; i < length / 2; i++) {
+			if (str.charAt(i) == str.charAt(length - 1 - i)) {
+				continue;
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	static long GCD(long a, long b) {
+		if (a == b)
+			return a;
+
+		if (a > b)
+			return GCD(a - b, b);
+		else
+			return GCD(a, b - a);
+	}
+
 	public static void main(String[] args) {
 		InputReader r = new InputReader(System.in);
-		
-		//main logic goes here
 	}
 }
 
@@ -263,5 +283,19 @@ class InputReader {
 
 	public long nextLong() {
 		return Long.parseLong(next());
+	}
+
+	public double nextDouble() {
+		return Double.parseDouble(next());
+	}
+	
+	public void readIntArray(int[] A, long N) {
+		for(int i = 0; i < N; i++)
+			A[i] = nextInt();
+	}
+	
+	public void readLongArray(Long[] A, long N) {
+		for(int i = 0; i < N; i++)
+			A[i] = nextLong();
 	}
 }
