@@ -7,6 +7,28 @@ import java.math.*;
 import java.util.regex.*;
 
 public class Solution {
+	static final int BIN_MAX = 1000;
+	static long[][] binomial = new long[BIN_MAX + 1][BIN_MAX + 1];
+
+	//method of Lilavati
+	static long bin(int n, int k) {
+	   if(n < k || n == 0) {
+	       binomial[n][k] = 0;
+	       return 0;
+	   }
+	   
+	   if(k == 0) {
+		   binomial[n][k] = 1;
+	       return 1;
+	   }
+	   
+	   if(binomial[n][k] != 0)
+	     return binomial[n][k];
+	    
+	   binomial[n][k] = (n / k) * bin(n - 1, k - 1);
+	   return binomial[n][k];
+	}
+	
 	// reverse a string from ith (0 index based) character to end
 	static String reverse(int i, String s) {
 		StringBuilder str = new StringBuilder(s);
@@ -241,7 +263,8 @@ public class Solution {
 
 		return true;
 	}
-
+	
+	//dijkstra method
 	static long GCD(long a, long b) {
 		if (a == b)
 			return a;
@@ -250,6 +273,24 @@ public class Solution {
 			return GCD(a - b, b);
 		else
 			return GCD(a, b - a);
+	}
+
+	static int binarySearch(int[] A, int x) {
+		int l = 0, h = A.length - 1;
+
+		while (l <= h) {
+			int mid = l + (h - l) / 2;
+
+			if (A[mid] == x)
+				return mid;
+
+			if (A[mid] > x)
+				h = mid - 1;
+			else
+				l = mid + 1;
+		}
+
+		return -1;
 	}
 
 	public static void main(String[] args) {
@@ -288,14 +329,14 @@ class InputReader {
 	public double nextDouble() {
 		return Double.parseDouble(next());
 	}
-	
+
 	public void readIntArray(int[] A, long N) {
-		for(int i = 0; i < N; i++)
+		for (int i = 0; i < N; i++)
 			A[i] = nextInt();
 	}
-	
+
 	public void readLongArray(Long[] A, long N) {
-		for(int i = 0; i < N; i++)
+		for (int i = 0; i < N; i++)
 			A[i] = nextLong();
 	}
 }
