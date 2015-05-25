@@ -49,9 +49,8 @@ public class Partition {
 				array[i] = e;
 				
 				k++;
-			} else if(array[i] == 1) {
+			} else 
 				continue;
-			}
 		}
 	}
 	

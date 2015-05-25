@@ -10,25 +10,47 @@ public class Solution {
 	static final int BIN_MAX = 1000;
 	static long[][] binomial = new long[BIN_MAX + 1][BIN_MAX + 1];
 
-	//method of Lilavati
-	static long bin(int n, int k) {
-	   if(n < k || n == 0) {
-	       binomial[n][k] = 0;
-	       return 0;
-	   }
-	   
-	   if(k == 0) {
-		   binomial[n][k] = 1;
-	       return 1;
-	   }
-	   
-	   if(binomial[n][k] != 0)
-	     return binomial[n][k];
-	    
-	   binomial[n][k] = (n / k) * bin(n - 1, k - 1);
-	   return binomial[n][k];
-	}
+	// method of Lilavati
+	/*static long bin(int n, int k) {
+		if (n < k || n == 0) {
+			binomial[n][k] = 0;
+			return 0;
+		}
+
+		if (k == 0) {
+			binomial[n][k] = 1;
+			return 1;
+		}
+
+		if (binomial[n][k] != 0)
+			return binomial[n][k];
+
+		binomial[n][k] = (n / k) * bin(n - 1, k - 1);
+		return binomial[n][k];
+	}*/
 	
+	static long bin(int N, int K) {
+	      if (K < 0) {
+	          return 0;
+	      }
+	      
+	      if(K > N) {
+	          binomial[N][K] = 0;
+	          return 0;
+	      }
+	    
+	      if (K == 0 || N == K) {
+	          binomial[N][K] = 1;
+	          return binomial[N][K];
+	      }
+
+	      if (binomial[N][K] != 0)
+	          return binomial[N][K];
+
+	      binomial[N][K] = bin(N - 1, K - 1) + bin(N - 1, K);
+	      return binomial[N][K];
+	  }
+
 	// reverse a string from ith (0 index based) character to end
 	static String reverse(int i, String s) {
 		StringBuilder str = new StringBuilder(s);
@@ -43,6 +65,26 @@ public class Solution {
 		}
 
 		return str.toString();
+	}
+
+	// reverse array between range
+	static void reverseArray(int[] a, int l, int h) {
+		for (int i = l; i < l + (h - l + 1) / 2; i++) {
+			int t = a[i];
+			a[i] = a[l + h - i];
+			a[l + h - i] = t;
+		}
+	}
+
+	// reverse array
+	static void reverseArray(int[] a) {
+		int l = a.length;
+
+		for (int i = 0; i < l / 2; i++) {
+			int t = a[i];
+			a[i] = a[l - i - 1];
+			a[l - i - 1] = t;
+		}
 	}
 
 	// swap chrs in a string
@@ -124,11 +166,25 @@ public class Solution {
 			if ((b & 1) != 0)
 				result *= a;
 
-			a = a * a;
-			b = b >> 1;
+			a *= a;
+			b >>= 1;
 		}
 
 		return result;
+	}
+
+	public static long modExp(long b, long e, int mod) {
+		long r = 1;
+		
+		while (e > 0) {
+			if ((e & 1) == 1)
+				r = (r * b) % mod;
+			
+			b = (b * b) % mod;
+			e >>= 1;
+		}
+		
+		return r;
 	}
 
 	// Babylonian fast square root method
@@ -263,8 +319,8 @@ public class Solution {
 
 		return true;
 	}
-	
-	//dijkstra method
+
+	// dijkstra method
 	static long GCD(long a, long b) {
 		if (a == b)
 			return a;

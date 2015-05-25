@@ -12,7 +12,7 @@ public class Power {
 
 	// binary exponentiation right to left
 	//http://mathforum.org/library/drmath/view/55603.html
-	static long powBERL(int a, int b) {
+	static long powBERL(long a, long b) {
 		if (b == 0)
 			return 1;
 
@@ -29,28 +29,10 @@ public class Power {
 			a = a * a;
 			b = b >> 1;
 		}
-
-		return result;
-	}
-	
-	// binary exponentiation left to right
-	//TODO
-	static long powBELR(int a, int b) {
-		if (b == 0)
-			return 1;
-
-		if (a == 0)
-			return 0;
-
-		long result = 1;
-
-		while (b > 1) {
-			
-		}
 		
 		return result;
 	}
-
+	
 	// iterative
 	private static long printPower(int x, int n) {
 		if (n == 0)
