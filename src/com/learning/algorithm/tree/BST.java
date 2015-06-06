@@ -633,8 +633,6 @@ public class BST<T extends Comparable<T>> {
 
 		Node<T> current = root;
 
-		// stack.push(root);
-
 		boolean done = false;
 
 		System.out.println("\n === In order traversal using stack === ");
@@ -645,11 +643,10 @@ public class BST<T extends Comparable<T>> {
 				current = current.left;
 			} else {
 				if (!stack.isEmpty()) {
-					Node<T> top = stack.peek();
-
+					Node<T> top = stack.pop();
+					
 					System.out.print(top.key + " ");
 					current = top.right;
-					stack.pop();
 				} else {
 					done = true;
 				}

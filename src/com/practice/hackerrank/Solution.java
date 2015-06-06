@@ -330,6 +330,13 @@ public class Solution {
 		else
 			return GCD(a, b - a);
 	}
+	
+	// euclids method
+	static long GCD2(long a, long b) {
+		if(a % b == 0) return b;
+		
+		return GCD2(b, a % b);
+	}
 
 	static int binarySearch(int[] A, int x) {
 		int l = 0, h = A.length - 1;
@@ -350,49 +357,49 @@ public class Solution {
 	}
 
 	public static void main(String[] args) {
-		InputReader r = new InputReader(System.in);
+		InputReader ip = new InputReader(System.in);
 	}
-}
+	
+	static class InputReader {
+		public BufferedReader reader;
+		public StringTokenizer tokenizer;
 
-class InputReader {
-	public BufferedReader reader;
-	public StringTokenizer tokenizer;
-
-	public InputReader(InputStream stream) {
-		reader = new BufferedReader(new InputStreamReader(stream), 32768);
-		tokenizer = null;
-	}
-
-	public String next() {
-		while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-			try {
-				tokenizer = new StringTokenizer(reader.readLine());
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+		public InputReader(InputStream stream) {
+			reader = new BufferedReader(new InputStreamReader(stream), 32768);
+			tokenizer = null;
 		}
-		return tokenizer.nextToken();
-	}
 
-	public int nextInt() {
-		return Integer.parseInt(next());
-	}
+		public String next() {
+			while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+				try {
+					tokenizer = new StringTokenizer(reader.readLine());
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return tokenizer.nextToken();
+		}
 
-	public long nextLong() {
-		return Long.parseLong(next());
-	}
+		public int nextInt() {
+			return Integer.parseInt(next());
+		}
 
-	public double nextDouble() {
-		return Double.parseDouble(next());
-	}
+		public long nextLong() {
+			return Long.parseLong(next());
+		}
 
-	public void readIntArray(int[] A, long N) {
-		for (int i = 0; i < N; i++)
-			A[i] = nextInt();
-	}
+		public double nextDouble() {
+			return Double.parseDouble(next());
+		}
 
-	public void readLongArray(Long[] A, long N) {
-		for (int i = 0; i < N; i++)
-			A[i] = nextLong();
+		public void readIntArray(int[] A, long N) {
+			for (int i = 0; i < N; i++)
+				A[i] = nextInt();
+		}
+
+		public void readLongArray(Long[] A, long N) {
+			for (int i = 0; i < N; i++)
+				A[i] = nextLong();
+		}
 	}
 }
