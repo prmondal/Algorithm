@@ -4,7 +4,7 @@ public class MinEditDistanceDP {
 
 	public static void main(String[] args) {
 		String str1 = "ab";
-		String str2 = "x";
+		String str2 = "cd";
 		
 		printMinEditDistance(str1, str2);
 	}

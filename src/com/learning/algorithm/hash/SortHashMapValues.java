@@ -3,13 +3,11 @@ package com.learning.algorithm.hash;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class SortHashMapValues {
 	public static void main(String[] args) {
@@ -53,15 +51,8 @@ public class SortHashMapValues {
 	}
 
 	static void printMap(Map<Integer, String> map) {
-		Set<Map.Entry<Integer, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<Integer, String>> it = set.iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<Integer, String> e = it.next();
-
-			System.out.println("Key: " + e.getKey() + " , value: "
-					+ e.getValue());
+		for(Map.Entry<Integer, String> s : map.entrySet()) {
+			System.out.println("Key: " + s.getKey() + ", value: " + s.getValue());
 		}
 	}
 }

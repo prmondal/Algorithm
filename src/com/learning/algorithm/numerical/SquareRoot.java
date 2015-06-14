@@ -28,17 +28,16 @@ public class SquareRoot {
 		return x;
 	}
 	
+	//binary search
 	static void printSquareRoot(float n, float l, float h) {
 		while((int) h > (int) l) {
 			float mid = l + (h - l) / 2;
-			//System.out.println(mid);
+			
 			if(mid * mid > n) {
 				h = mid;
 			} else {
 				l = mid;
 			}
-			
-			//System.out.println("l: " + l + ", h: " + h);
 		}
 		
 		System.out.println(l);

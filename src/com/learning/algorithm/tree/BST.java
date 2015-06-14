@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 public class BST<T extends Comparable<T>> {
 	static int sum = 0;
-	
+
 	public static void main(String[] args) {
 		BST<Integer> tree = new BST<Integer>();
 
@@ -121,10 +121,10 @@ public class BST<T extends Comparable<T>> {
 
 		System.out.println("\n=== Bottom view === ");
 		tree.printBottomView(map);
-		
+
 		System.out.println("\n=== Top View === ");
 		tree.printTopView(map);
-		
+
 		System.out.println(tree.isSibling(rootalt, 8, 9));
 
 		// is same check
@@ -218,8 +218,8 @@ public class BST<T extends Comparable<T>> {
 		System.out.println("\nMinimum path length: "
 				+ ((l.minPathLength != Integer.MAX_VALUE) ? l.minPathLength
 						: "No path found!"));
-		
-		//order statistics
+
+		// order statistics
 		System.out.println("\n === Order statistics ===");
 		Node<Integer> root24 = new Node<Integer>(20);
 
@@ -232,14 +232,14 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(root24, 30);
 		tree.insertNode(root24, 25);
 		tree.insertNode(root24, 40);
-		
-		//print kth largest
+
+		// print kth largest
 		tree.printKthLargest(root24, 7, new Count());
-		
-		//print kth smallest
+
+		// print kth smallest
 		tree.printKthSmallest(root24, 5, new Count());
-		
-		//remove single child nodes
+
+		// remove single child nodes
 		System.out.println("\n === Remove single child nodes ===");
 		Node<Integer> r1 = new Node<Integer>(20);
 
@@ -249,12 +249,12 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r1, 8);
 		tree.insertNode(r1, 4);
 		tree.insertNode(r1, 10);
-		
+
 		r1 = tree.removeSingleChildNodes(r1);
-		
+
 		tree.printInOrder(r1);
-		
-		//get minimum node in right sub tree
+
+		// get minimum node in right sub tree
 		System.out.println("\n === Print minimum node in right sub-tree ===");
 		Node<Integer> r2 = new Node<Integer>(20);
 
@@ -262,10 +262,10 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r2, 30);
 		tree.insertNode(r2, 35);
 		tree.insertNode(r2, 40);
-		
+
 		System.out.println(tree.getMinNodeRightSubTree(r2.right).key);
-		
-		//delete node from tree
+
+		// delete node from tree
 		System.out.println("\n === Delete node from tree ===");
 		Node<Integer> r3 = new Node<Integer>(8);
 
@@ -278,21 +278,35 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r3, 14);
 		tree.insertNode(r3, 11);
 		tree.insertNode(r3, 13);
-		
+
 		tree.printInOrder(tree.deleteNode(r3, 4));
-		
+
 		System.out.println("\n === To Sum Tree With Greater Key === ");
 		Node<Integer> r4 = new Node<Integer>(5);
 		tree.insertNode(r4, 2);
 		tree.insertNode(r4, 13);
 		tree.insertNode(r4, 10);
-		
+
 		tree.toSumTreeWithGreaterKeys(r4);
-		
+
 		tree.printInOrder(r4);
+		
+		//print kdistance node
+		Node<Integer> r5 = new Node<Integer>(8);
+
+		// insert node
+		tree.insertNode(r5, 4);
+		tree.insertNode(r5, 2);
+		tree.insertNode(r5, 6);
+		tree.insertNode(r5, 20);
+		tree.insertNode(r5, 10);
+		tree.insertNode(r5, 30);
+		
+		System.out.println("\n === Print K-dist nodes down === ");
+		tree.printKDistNode(r5, 4, 2);
 	}
 
-	private void printDLL(Node<T> head) {
+	void printDLL(Node<T> head) {
 		Node<T> current = head;
 
 		Node<T> tail = null;
@@ -427,7 +441,7 @@ public class BST<T extends Comparable<T>> {
 		return max(height(root.left), height(root.right)) + 1;
 	}
 
-	private int max(int a, int b) {
+	int max(int a, int b) {
 		return (a > b) ? a : b;
 	}
 
@@ -506,7 +520,7 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 
-	private void printLevel(Node<T> root, int i, boolean leftToRight) {
+	void printLevel(Node<T> root, int i, boolean leftToRight) {
 		if (root == null)
 			return;
 
@@ -644,7 +658,7 @@ public class BST<T extends Comparable<T>> {
 			} else {
 				if (!stack.isEmpty()) {
 					Node<T> top = stack.pop();
-					
+
 					System.out.print(top.key + " ");
 					current = top.right;
 				} else {
@@ -740,7 +754,7 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 
-	private void printPathList(ArrayList<T> list, int pathLength) {
+	void printPathList(ArrayList<T> list, int pathLength) {
 		System.out.println();
 
 		for (int i = 0; i < pathLength; i++) {
@@ -813,7 +827,7 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 
-	private void printPath(ArrayList<T> path) {
+	void printPath(ArrayList<T> path) {
 		System.out.println();
 
 		for (T k : path) {
@@ -861,7 +875,8 @@ public class BST<T extends Comparable<T>> {
 			Node<T> l = toDLL(root.left);
 
 			// get inorder predecessor of root
-			for (; l.right != null; l = l.right);
+			for (; l.right != null; l = l.right)
+				;
 
 			l.right = root;
 			root.left = l;
@@ -872,7 +887,8 @@ public class BST<T extends Comparable<T>> {
 			Node<T> r = toDLL(root.right);
 
 			// get inorder successor of root
-			for (; r.left != null; r = r.left);
+			for (; r.left != null; r = r.left)
+				;
 
 			r.left = root;
 			root.right = r;
@@ -882,7 +898,8 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	Node<T> getLeftMostNode(Node<T> root) {
-		for (; root.left != null; root = root.left);
+		for (; root.left != null; root = root.left)
+			;
 
 		return root;
 	}
@@ -930,8 +947,8 @@ public class BST<T extends Comparable<T>> {
 			System.out.print(list.get(list.size() - 1) + " ");
 		}
 	}
-	
-	//print top view
+
+	// print top view
 	void printTopView(TreeMap<Integer, ArrayList<T>> map) {
 		System.out.println();
 
@@ -971,8 +988,8 @@ public class BST<T extends Comparable<T>> {
 		printLeftView(root.left, l, currLevel + 1);
 		printLeftView(root.right, l, currLevel + 1);
 	}
-	
-	//non recursive
+
+	// non recursive
 	void printLeftView(Node<T> root) {
 		if (root == null) {
 			return;
@@ -1018,21 +1035,21 @@ public class BST<T extends Comparable<T>> {
 		root.key = l + r;
 		return root.key + old;
 	}
-	
+
 	void toSumTreeWithGreaterKeys(Node<Integer> root) {
-		if(root == null)
+		if (root == null)
 			return;
-		
+
 		toSumTreeWithGreaterKeys(root.right);
-		
+
 		sum += root.key;
-		
+
 		root.key = sum;
-		
+
 		toSumTreeWithGreaterKeys(root.left);
 	}
 
-	private Node<Integer> arrayToBST(int[] array, int l, int h) {
+	Node<Integer> arrayToBST(int[] array, int l, int h) {
 		if (array.length == 0 || l > h)
 			return null;
 
@@ -1046,7 +1063,7 @@ public class BST<T extends Comparable<T>> {
 		return root;
 	}
 
-	private boolean isCousinNode(Node<T> root, T a, T b) {
+	boolean isCousinNode(Node<T> root, T a, T b) {
 		if (root == null)
 			return false;
 
@@ -1061,19 +1078,20 @@ public class BST<T extends Comparable<T>> {
 		return false;
 	}
 
-	private boolean isSibling(Node<T> root, T a, T b) {
+	boolean isSibling(Node<T> root, T a, T b) {
 		if (root == null)
 			return false;
 
-		if ((root.left != null && root.left.key.compareTo(a) == 0 && root.right != null && root.right.key.compareTo(b) == 0)
-				|| (root.left != null && root.left.key.compareTo(b) == 0 && root.right != null && root.right.key
-						.compareTo(a) == 0))
+		if ((root.left != null && root.left.key.compareTo(a) == 0
+				&& root.right != null && root.right.key.compareTo(b) == 0)
+				|| (root.left != null && root.left.key.compareTo(b) == 0
+						&& root.right != null && root.right.key.compareTo(a) == 0))
 			return true;
 
 		return isSibling(root.left, a, b) || isSibling(root.right, a, b);
 	}
 
-	private int getLevel(Node<T> root, T n, int level) {
+	int getLevel(Node<T> root, T n, int level) {
 		if (root == null)
 			return -1;
 
@@ -1085,7 +1103,7 @@ public class BST<T extends Comparable<T>> {
 				getLevel(root.right, n, level + 1));
 	}
 
-	private void getSuccPred(Node<T> root, T n, T[] result) {
+	void getSuccPred(Node<T> root, T n, T[] result) {
 		if (root == null)
 			return;
 
@@ -1111,7 +1129,7 @@ public class BST<T extends Comparable<T>> {
 				for (; current.left != null; current = current.left)
 					;
 
-				// store predecessor
+				// store succesor
 				result[1] = current.key;
 			}
 
@@ -1157,13 +1175,13 @@ public class BST<T extends Comparable<T>> {
 			// if path found with the sum
 			if ((Integer) root.key == sum) {
 				// update minimum
-				if(l.minPathLength > pathLength) {
+				if (l.minPathLength > pathLength) {
 					l.minPathLength = pathLength;
-					
+
 					// print path
 					printPathList(list, pathLength);
 				}
-				
+
 				return;
 			}
 		}
@@ -1184,133 +1202,186 @@ public class BST<T extends Comparable<T>> {
 			printMinimumSumPath(root.right, sum, l, pathLength, list);
 		}
 	}
-	
-	//k-th largest in BST
-	private void printKthLargest(Node<T> root, int k, Count count) {
-		if(root == null || k < 0)
+
+	// k-th largest in BST
+	void printKthLargest(Node<T> root, int k, Count count) {
+		if (root == null || k < 0)
 			return;
-		
+
 		printKthLargest(root.right, k, count);
-		
-		//increment count
+
+		// increment count
 		count.c++;
-		
-		//current node is kth largest. Print and return
-		if(k == count.c) {
+
+		// current node is kth largest. Print and return
+		if (k == count.c) {
 			System.out.println("kth largest key is " + root.key);
-			
+
 			return;
 		}
-		
+
 		printKthLargest(root.left, k, count);
 	}
-	
-	//k-th smallest in BST
-	private void printKthSmallest(Node<T> root, int k, Count count) {
-		if(root == null || k < 0)
+
+	// k-th smallest in BST
+	void printKthSmallest(Node<T> root, int k, Count count) {
+		if (root == null || k < 0)
 			return;
-		
+
 		printKthSmallest(root.left, k, count);
-		
-		//increment count
+
+		// increment count
 		count.c++;
-		
-		//current node is kth largest. Print and return
-		if(k == count.c) {
+
+		// current node is kth largest. Print and return
+		if (k == count.c) {
 			System.out.println("kth largest key is " + root.key);
-			
+
 			return;
 		}
-		
+
 		printKthSmallest(root.right, k, count);
 	}
 	
-	//do post order traversal and remove nodes with single child
-	private Node<T> removeSingleChildNodes(Node<T> root) {
-		if(root == null)
-			return null;
+	void printKDistNodesDown(Node<Integer> root, int k) {
+		if(root == null || k < 0) return;
 		
+		if(k == 0) {
+			System.out.print(root.key + " ");
+			return;
+		}
+		
+		printKDistNodesDown(root.left, k - 1);
+		printKDistNodesDown(root.right, k - 1);
+	}
+	
+	int printKDistNode(Node<Integer> root, Integer t, int k) {
+		if(root == null || k < 0) return -1;
+		
+		//print k-distance node down
+		if(root.key.compareTo(t) == 0) {
+			printKDistNodesDown(root, k);
+			return 0;
+		}
+		
+		//distance between left node and target
+		int dl = printKDistNode(root.left, t, k);
+		
+		if(dl != -1) {
+			//current node is at k distance from target
+			if(1 + dl == k) {
+				System.out.print(root.key + " ");
+			} else {
+				printKDistNodesDown(root.right, k - dl - 2);
+			}
+			
+			return 1 + dl;
+		}
+		
+		//same for right tree
+		int dr = printKDistNode(root.right, t, k);
+		
+		if(dr != -1) {
+			//current node is at k distance from target
+			if(1 + dr == k) {
+				System.out.print(root.key + " ");
+			} else {
+				printKDistNodesDown(root.left, k - dr - 2);
+			}
+			
+			return 1 + dr;
+		}
+		
+		return -1;
+	}
+
+	// do post order traversal and remove nodes with single child
+	Node<T> removeSingleChildNodes(Node<T> root) {
+		if (root == null)
+			return null;
+
 		root.left = removeSingleChildNodes(root.left);
 		root.right = removeSingleChildNodes(root.right);
-		
-		//do not remove leaf nodes
-		if(root.left == null && root.right == null) 
+
+		// do not remove leaf nodes
+		if (root.left == null && root.right == null)
 			return root;
-		
-		//node with child found
-		//single child node found
-		if(root.right == null) {
+
+		// node with child found
+		// single child node found
+		if (root.right == null) {
 			Node<T> left = root.left;
 			root.left = null;
 			root = left;
-		} else if(root.left == null) {
+		} else if (root.left == null) {
 			Node<T> right = root.right;
 			root.right = null;
 			root = right;
 		}
-		
+
 		return root;
 	}
-	
-	private Node<T> deleteNode(Node<T> root, int d) {
-		if(root == null)
+
+	Node<T> deleteNode(Node<T> root, int d) {
+		if (root == null)
 			return root;
-		
-		if((Integer) root.key > d) {
+
+		if ((Integer) root.key > d) {
 			root.left = deleteNode(root.left, d);
-		} else if((Integer) root.key < d) {
+		} else if ((Integer) root.key < d) {
 			root.right = deleteNode(root.right, d);
 		} else {
-			//candidate node is root
-			//case 1: it is leaf node
-			if(root.left == null && root.right == null) {
+			// candidate node is root
+			// case 1: it is leaf node
+			if (root.left == null && root.right == null) {
 				return null;
 			}
-			
-			//case 2: it has single child
-			if(root.left == null) {
+
+			// case 2: it has single child
+			if (root.left == null) {
 				Node<T> temp = root.right;
 				root.right = null;
-				
+
 				return temp;
 			}
-			
-			if(root.right == null) {
+
+			if (root.right == null) {
 				Node<T> temp = root.left;
 				root.left = null;
-				
+
 				return temp;
 			}
-			
-			//case 3: it has two children
+
+			// case 3: it has two children
 			Node<T> minNode = getMinNodeRightSubTree(root.right);
-			
-			//assign min node value to root node
+
+			// assign min node value to root node
 			root.key = minNode.key;
-			
-			//delete min node
+
+			// delete min node
 			root.right = deleteNode(root.right, (Integer) minNode.key);
 		}
-		
+
 		return root;
 	}
-	
-	//utility function to get the minimum value node in the tree
-	private Node<T> getMinNodeRightSubTree(Node<T> root) {
-		if(root == null) {
+
+	// utility function to get the minimum value node in the tree
+	Node<T> getMinNodeRightSubTree(Node<T> root) {
+		if (root == null) {
 			return root;
 		}
-		
+
 		Node<T> curr = root;
-		
-		//if root does not have left child
-		if(root.left == null) {
+
+		// if root does not have left child
+		if (root.left == null) {
 			return root;
 		}
-		
-		//go to extreme left
-		for(; curr.left != null; curr = curr.left);
-		
+
+		// go to extreme left
+		for (; curr.left != null; curr = curr.left)
+			;
+
 		return curr;
 	}
 
@@ -1336,10 +1407,10 @@ public class BST<T extends Comparable<T>> {
 		int maxLevel = Integer.MIN_VALUE;
 		int minPathLength = Integer.MAX_VALUE;
 	}
-	
+
 	static class Count {
 		int c = 0;
-		
+
 		Count() {
 			c = 0;
 		}

@@ -13,16 +13,14 @@ public class AllSubset {
 		
 		int[] solution = new int[str.length()];
 		
-		
-		printAllSubset(str.toCharArray(), 0, str.length() - 1);
-		//printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
+		//printAllSubset(str.toCharArray(), 0, str.length() - 1);
+		printAllSubset(str.toCharArray(), 0, str.length() - 1, solution);
 
 	}
-
+	
+	//use solution array
 	private static void printAllSubset(char[] array, int start, int end, int[] solution) {
-		if(start > end) {
-			return;
-		}
+		if(start > end) return;
 		
 		for(int i = start; i <= end; i++) {
 			solution[i] = 1;
@@ -32,8 +30,6 @@ public class AllSubset {
 			printSet(solution, array);
 			
 			solution[i] = 0;
-			
-			//start++;
 		}
 	}
 	
@@ -47,6 +43,7 @@ public class AllSubset {
 		System.out.println();
 	}
 	
+	//stack based
 	private static void printAllSubset(char[] array, int start, int end) {
 		for(int i = start; i <= end; i++) {
 			stack.push(array[i]);
@@ -58,6 +55,25 @@ public class AllSubset {
 			stack.pop();
 		}
 		
+	}
+	
+	//using bit
+	static void printAllSubset(char[] a) {
+		int subsetSize = (int) Math.pow(2.0, a.length);
+		
+		for (int i = 1; i < subsetSize; i++) {
+			int l = 0;
+
+			while (l < a.length) {
+				if ((i & (1 << l)) != 0) {
+					System.out.print(a[l] + " ");
+				}
+
+				l++;
+			}
+			
+			System.out.println();
+		}
 	}
 
 	private static void printSubSet(Stack<Character> stack) {

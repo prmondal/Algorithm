@@ -5,10 +5,10 @@ public class RemoveWhitespace {
 	public static void main(String[] args) {
 		String s = "a  bb     ccc       ddddddddd           eeeeeeeeee";
 
-		// s = removeSpaces(s);
+		s = removeSpaces(s);
 
-		// System.out.println(s);
-		remove(s);
+		System.out.println(s);
+		//remove(s);
 	}
 
 	// extra space

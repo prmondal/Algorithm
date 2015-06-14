@@ -3,19 +3,19 @@ package com.learning.algorithm.array;
 public class DutchNationalFLagPartition {
 
 	public static void main(String[] args) {
-		int[] a = new int[] { 2, 2, 2, 1, 1, 1, 0, 0, 0 };
+		int[] a = new int[] { 0,0,0,1,1,1,2,2,2 };
 		threeWayPartition(a);
 		printArray(a);
 
-		a = new int[] { 0, 1, 0, 1, 1, 1, 0, 0, 0 };
+		a = new int[] { 0, 1, 0, 1, 0, 1, 0, 0, 0 };
 		twoWayPartition(a);
 		printArray(a);
 		
 		//a = new int[] { 1,0,2,0,3,2,1,0 }; //failed
 		//a = new int[] { 3,3,3,3,3,3,2,2,2,2,2,1,1,1,1,1,0,0,0 };
 		a = new int[] { 0,1,2,3 };
-		fourWayPartition(a);
-		printArray(a);
+		//fourWayPartition(a);
+		//printArray(a);
 	}
 
 	static void printArray(int[] a) {
@@ -36,7 +36,7 @@ public class DutchNationalFLagPartition {
 				a[low] = e;
 
 				high--;
-			} else if (a[low] == 0) {
+			} else {
 				low++;
 			}
 		}

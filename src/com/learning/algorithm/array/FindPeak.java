@@ -9,9 +9,8 @@ public class FindPeak {
 		
 		//2D peak
 		int[][] g = {
-				{1,2,3,4,5,6},
-				{3,10,5,6,8,4},
-				{3,4,5,6,7,4}
+				{10,10},
+				{10,10}
 		};
 		
 		System.out.println(findPeak2D(g, 0, g[0].length - 1, g.length));

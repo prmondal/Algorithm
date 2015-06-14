@@ -5,324 +5,188 @@ import java.util.HashSet;
 public class SLL<T extends Comparable<T>> {
 
 	public static void main(String[] args) {
-		SLL<Integer> sll = new SLL<Integer>();
+		SLL<Integer> ll = new SLL<Integer>();
 
 		// head node
 		Node<Integer> head = new Node<Integer>(1);
 
 		// insert nodes
-		sll.insertNode(head, 2);
-		sll.insertNode(head, 3);
-		sll.insertNode(head, 4);
-		sll.insertNode(head, 5);
-		sll.insertNode(head, 5);
-		sll.insertNode(head, 5);
-		sll.insertNode(head, 6);
-		sll.insertNode(head, 7);
-		sll.insertNode(head, 8);
-		sll.insertNode(head, 9);
+		ll.insertNode(head, 2);
+		ll.insertNode(head, 3);
+		ll.insertNode(head, 4);
+		ll.insertNode(head, 5);
+		ll.insertNode(head, 6);
+		ll.insertNode(head, 7);
+		ll.insertNode(head, 8);
+		ll.insertNode(head, 9);
 
 		// print list
-		sll.printSLL(head);
-
-		System.out.println();
-
-		// print reverse linked list
-		head = sll.reverseSLL(head);
-		
-		sll.printSLL(head);
-
-		// head node
-		/*head = new Node<Integer>(1);
-
-		// create looped linked list
-		// insert nodes
-		sll.insertNode(head, 2);
-		sll.insertNode(head, 3);
-		sll.insertNode(head, 4);
-		sll.insertNode(head, 5);
-		sll.insertNode(head, 6);
-
-		head.next.next.next.next.next.next = head.next;
-
-		// System.out.println(sll.isLooped(head));
-
-		sll.printLoopStart(head);*/
-
-		// merge sort of two sorted linked list
-		System.out.println("\nMerge sort of two sorted list");
-
-		Node<Integer> h1 = new Node<Integer>(10);
-		Node<Integer> h2 = new Node<Integer>(200);
-
-		// insert nodes
-		sll.insertNode(h1, 20);
-		sll.insertNode(h1, 30);
-		sll.insertNode(h1, 40);
-		sll.insertNode(h1, 50);
-		sll.insertNode(h1, 60);
-
-		System.out.println("List 1: ");
-		sll.printSLL(h1);
-		System.out.println();
-
-		sll.insertNode(h2, 210);
-		sll.insertNode(h2, 220);
-		sll.insertNode(h2, 230);
-		sll.insertNode(h2, 240);
-		sll.insertNode(h2, 250);
-		sll.insertNode(h2, 300);
-
-		System.out.println("List 2: ");
-		sll.printSLL(h2);
-
-		System.out.println("\nSorted list: ");
-		sll.printSLL(sll.mergeSLL(h1, h2));
-		
-		//remove duplicates
-		sll.removeDuplicates(head);
-		
-		//print after removing duplicate
-		System.out.println("\nAfter duplicate removed.");
-		sll.printSLL(head);
-		
-		//merge sort
-		Node<Integer> h3 = new Node<Integer>(100);
-
-		// insert nodes
-		sll.insertNode(h3, 25);
-		sll.insertNode(h3, 5);
-		sll.insertNode(h3, 45);
-		sll.insertNode(h3, 40);
-		sll.insertNode(h3, 35);
-		sll.insertNode(h3, 35);
-		sll.insertNode(h3, 35);
-		
-		System.out.println();
-		sll.printSLL(sll.mergeSort(h3));
-		
-		//join two list alternatively
-		Node<Integer> a = new Node<Integer>(100);
-
-		// insert nodes
-		sll.insertNode(a, 200);
-		sll.insertNode(a, 300);
-		sll.insertNode(a, 400);
-		sll.insertNode(a, 500);
-		sll.insertNode(a, 600);
-		sll.insertNode(a, 700);
-		sll.insertNode(a, 800);
-		
-		//join two list alternatively
-		Node<Integer> b = new Node<Integer>(10);
-
-		// insert nodes
-		sll.insertNode(b, 20);
-		sll.insertNode(b, 30);
-		sll.insertNode(b, 40);
-		sll.insertNode(b, 50);
-		sll.insertNode(b, 60);
-		sll.insertNode(b, 70);
-		sll.insertNode(b, 80);
-		sll.insertNode(b, 90);
-		sll.insertNode(b, 100);
-		
-		System.out.println("\n === Reverse using recursion === ");
-		b = sll.reverseSLLRecursive(b);
-		sll.printSLL(b);
-		
-		//join two ll
-		b = sll.alternateJoin(a, b);
-		System.out.println("\nFirst list: ");
-		sll.printSLL(a);
-		
-		System.out.println("\nSecond list: ");
-		sll.printSLL(b);
-		
-		//add numbers
-		Node<Integer> aa = new Node<Integer>(9);
-		Node<Integer> bb = new Node<Integer>(9);
-		
-		sll.insertNode(aa, 9);
-		sll.insertNode(aa, 9);
-		
-		sll.insertNode(bb, 9);
-		sll.insertNode(bb, 9);
-		
-		Node<Integer> sumHead = sll.getSum(aa, bb, new Sum());
-		
-		//print sum
-		System.out.println("\nSum of 999 and 999: ");
-		sll.printSLL(sumHead);
-		
-		//check palindrome
-		System.out.println("\n === Check Palindrome === ");
-		Node<Integer> h4 = new Node<Integer>(1);
-
-		// insert nodes
-		sll.insertNode(h4, 2);
-		sll.insertNode(h4, 3);
-		//sll.insertNode(h4, 4);
-		sll.insertNode(h4, 3);
-		sll.insertNode(h4, 2);
-		sll.insertNode(h4, 1);
-		
-		//print list
-		System.out.println(" === Original LL === ");
-		sll.printSLL(h4);
-		
-		if(sll.isPalindrome(h4)) {
-			System.out.println("\nThe LL is a palindrome.");
-		} else {
-			System.out.println("\nThe LL is not a palindrome.");
-		}
-		
-		System.out.println(" === LL is restored === ");
-		sll.printSLL(h4);
+		ll.printSLL(head);
 	}
-	
-	//linked list size
-	private int getSize(Node<T> head) {
+
+	// find size
+	int getSize(Node<T> head) {
 		int size = 0;
-		
-		if(head == null)
+
+		Node<T> curr = head;
+
+		if (curr == null)
 			return size;
-		
-		while(head != null) {
-			head = head.next;
+
+		while (curr != null) {
+			curr = curr.next;
 			size++;
 		}
-		
+
 		return size;
 	}
-	
-	//calculate sum of two same length LL
-	private Node<Integer> getSum(Node<T> h1, Node<T> h2, Sum s) {
+
+	// some of two numbers with same number of digits using LL
+	Node<Integer> calSum(Node<T> h1, Node<T> h2, Sum s) {
 		int l = getSize(h1);
 		int m = getSize(h2);
-		
+
 		Node<Integer> result = null;
-		
-		if(l == m) {
-			result = getSameSum(h1, h2, s);
-		} else 
-			return result;
-			
-		if(s.carry != 0 && result != null) {
-			Node<Integer> _new = new Node<Integer>(s.carry);
-			
-			_new.next = result;
-			result = _new;
-		} 
-		
+
+		if (l == m) {
+			result = calSumEqualLengthNumbers(h1, h2, s);
+		} else
+			return result; // TODO cal for diff len nums
+
+		// add remaining carry
+		if (s.carry != 0 && result != null) {
+			Node<Integer> sumNode = new Node<Integer>(s.carry);
+
+			sumNode.next = result;
+			result = sumNode;
+		}
+
 		return result;
 	}
 
-	//get sum of equal length numbers
-	private Node<Integer> getSameSum(Node<T> h1, Node<T> h2, Sum s) {
-		if(h1 == null) {
+	// calculate sum of two equal length numbers
+	Node<Integer> calSumEqualLengthNumbers(Node<T> h1, Node<T> h2, Sum s) {
+		// if one is null then other is also null
+		if (h1 == null) {
 			return null;
 		}
-		
+
+		// result node for the sum
 		Node<Integer> result = new Node<Integer>();
-		
-		result.next = getSameSum(h1.next, h2.next, s);
-		
-		//add sum to the result node and update carry
+
+		result.next = calSumEqualLengthNumbers(h1.next, h2.next, s);
+
+		// add sum to the result node and update carry
 		int sum = (Integer) h1.key + (Integer) h2.key + s.carry;
-		
+
+		// calculate carry and sum
 		s.carry = sum / 10;
 		sum = sum % 10;
-		
+
+		// store sum to this node
 		result.key = sum;
-		
+
 		return result;
 	}
 
-	private Node<T> alternateJoin(Node<T> a, Node<T> b) {
-		if(a == null || b == null) {
-			return b;
+	// alternately join two LL
+	// append remaining nodes at the end of the joined list in case two LL are of
+	// different length
+	Node<T> alternateJoin(Node<T> a, Node<T> b) {
+		if (a == null || b == null) {
+			return null;
 		}
-		
-		//store current node pointers
+
+		// store current node pointers
 		Node<T> currA = a;
 		Node<T> currB = b;
 		
-		//store next nodes pointers
+		//store pointer to the last node of result list
+		Node<T> last = a;
+
+		// store next nodes pointers
 		Node<T> nextA = a.next;
 		Node<T> nextB = b.next;
-		
-		//loop through first till either first list ends of second list ends earlier
-		while(currA != null && currB != null) {
-			//join
+
+		// loop through two LL till either one of them ends in case of different length or both ends in case of equal length case
+		while (currA != null && currB != null) {
+			// join
 			currA.next = currB;
 			currB.next = nextA;
 			
-			//update current pointers
+			//update last node
+			last = currB;
+
+			// update current pointers
 			currA = nextA;
 			currB = nextB;
-			
-			//update next pointers
-			if(currA != null) nextA = currA.next;
-			if(currB != null) nextB = currB.next;
-		}
-		
-		if(currB != null) {
-			//update head pointer of second list
-			b = currB;
-		}
-		
-		return b;
-	}
 
-	private void removeDuplicates(Node<T> head) {
-		if(head == null) 
+			// update next pointers
+			if (currA != null)
+				nextA = currA.next;
+			if (currB != null)
+				nextB = currB.next;
+		}
+		
+		//extra nodes in list B
+		if (currB != null) {
+			//append extra nodes of B to list A
+			last.next = currB;
+		}
+		
+		//A is the result list
+		return a;
+	}
+	
+	//remove duplicate nodes from LL
+	void removeDuplicates(Node<T> head) {
+		if (head == null)
 			return;
-		
+
 		Node<T> current = head;
-		
-		while(current.next != null) {
-			//duplicate found comparing current node with next node
-			if(current.key.compareTo(current.next.key) == 0) {
+
+		while (current.next != null) {
+			// compare current node with next node
+			if (current.key.compareTo(current.next.key) == 0) {
 				Node<T> nextNext = current.next.next;
-				
-				//set next of next node to null
+
+				// set next of next node to null
 				current.next.next = null;
-				
-				//link to next to next node with current node
+
+				// update current nodes next
 				current.next = nextNext;
 			} else {
-				//advance current pointer
+				// advance current pointer
 				current = current.next;
 			}
 		}
 	}
-
-	private boolean isLooped(Node<T> head) {
-		System.out.println();
-
+	
+	// hash based method
+	boolean isLooped(Node<T> head) {
 		if (head == null)
 			return false;
-
-		// hash based
+		
 		HashSet<Node<T>> map = new HashSet<Node<T>>();
 
 		Node<T> p = head;
 
 		while (p != null) {
+			//duplicate node found
 			if (map.contains(p)) {
 				return true;
 			}
 
 			map.add(p);
-
+			
 			p = p.next;
 		}
 
 		return false;
 	}
-
-	private void printLoopStart(Node<T> head) {
+	
+	//print loop start using slow and fast pointer strategy
+	void printLoopStart(Node<T> head) {
 		System.out.println();
 
 		if (head == null || head.next == null) {
@@ -354,11 +218,12 @@ public class SLL<T extends Comparable<T>> {
 		int count = 0;
 
 		Node<T> p = slow.next;
-		
+
 		count++;
 
 		while (p != slow) {
 			p = p.next;
+			
 			count++;
 		}
 
@@ -385,8 +250,173 @@ public class SLL<T extends Comparable<T>> {
 
 		System.out.println("Loop start is " + p.key);
 	}
+	
+	//iterative reverse
+	Node<T> reverseSLL(Node<T> head) {
+		if (head == null) {
+			return head;
+		}
 
-	private void insertNode(Node<T> head, T key) {
+		Node<T> p = head;
+		Node<T> q = p.next;
+		Node<T> r = q.next;
+
+		p.next = null;
+
+		while (r != null) {
+			q.next = p;
+			p = q;
+			q = r;
+			r = r.next;
+		}
+
+		q.next = p;
+
+		return q;
+	}
+
+	// recursive reverse
+	Node<T> reverseSLLRecursive(Node<T> head) {
+		if (head == null || head.next == null)
+			return head;
+
+		Node<T> first = head;
+		Node<T> rest = head.next;
+
+		head = reverseSLLRecursive(rest);
+		
+		first.next.next = first;
+		first.next = null;
+
+		return head;
+	}
+
+	Node<T> mergeSort(Node<T> head) {
+		if (head == null || head.next == null)
+			return head;
+
+		Node<T> a = head;
+		Node<T> b = null;
+
+		Node<T> slow = head;
+		Node<T> fast = head.next;
+
+		// find middle node
+		while (fast.next != null) {
+			fast = fast.next;
+
+			if (fast.next != null) {
+				fast = fast.next;
+				slow = slow.next;
+			}
+		}
+
+		// get node after middle node
+		b = slow.next;
+
+		// split two SLL
+		slow.next = null;
+
+		a = mergeSort(a);
+		b = mergeSort(b);
+
+		return mergeSLL(a, b);
+	}
+	
+	//merge two sorted LL
+	Node<T> mergeSLL(Node<T> a, Node<T> b) {
+		if (a == null && b == null) {
+			return null;
+		}
+
+		if (a == null) {
+			return b;
+		}
+
+		if (b == null) {
+			return a;
+		}
+
+		if (a.key.compareTo(b.key) <= 0) {
+			a.next = mergeSLL(a.next, b);
+			return a;
+		}
+
+		b.next = mergeSLL(a, b.next);
+		return b;
+	}
+	
+	//check if a LL is palindrome or not
+	boolean isPalindrome(Node<T> head) {
+		if (head == null || head.next == null)
+			return true;
+
+		// get middle node of LL and split the LL
+		Node<T> middle = getMiddleNode(head, true);
+
+		// reverse linked list from middle element to rest
+		Node<T> head2 = reverseSLL(middle);
+
+		// check nodes from first list with second list one by one
+		// if the values are not same LL is not palindrome
+		Node<T> curr1 = head;
+		Node<T> curr2 = head2;
+
+		//middle node is at the last of second LL
+		while (curr1 != null && curr2 != null) {
+			// mismatch found
+			if (curr1.key.compareTo(curr2.key) != 0) {
+				return false;
+			}
+
+			curr1 = curr1.next;
+			curr2 = curr2.next;
+		}
+
+		// restore the LL
+		head2 = reverseSLL(head2);
+
+		curr1 = head;
+
+		while (curr1.next != null) {
+			curr1 = curr1.next;
+		}
+
+		// establish the link
+		curr1.next = head2;
+
+		return true;
+	}
+	
+	//get middle node using slow and fast pointer strategy
+	Node<T> getMiddleNode(Node<T> head, boolean split) {
+		if (head == null)
+			return head;
+
+		Node<T> slow = head;
+		Node<T> fast = slow.next;
+
+		while (fast.next != null) {
+			fast = fast.next;
+
+			if (fast.next != null) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+		}
+
+		Node<T> temp = slow.next;
+
+		// if flag is true split the LL
+		if (split) {
+			slow.next = null;
+		}
+
+		return temp;
+	}
+	
+	//add node at the end of the LL
+	void insertNode(Node<T> head, T key) {
 		if (head == null) {
 			return;
 		}
@@ -409,206 +439,31 @@ public class SLL<T extends Comparable<T>> {
 		p.next = _new;
 	}
 
+	//print LL
 	void printSLL(Node<T> head) {
-		while (head != null) {
-			System.out.print(head.key + " ");
+		Node<T> curr = head;
+		
+		while (curr != null) {
+			System.out.print(curr.key + " ");
 
-			head = head.next;
+			curr = curr.next;
 		}
 	}
 
-	Node<T> reverseSLL(Node<T> head) {
-		if (head == null) {
-			return null;
-		}
-
-		if (head.next == null) {
-			return head;
-		}
-
-		Node<T> p = head;
-		Node<T> q = p.next;
-		Node<T> r = q.next;
-
-		p.next = null;
-
-		while (r != null) {
-			q.next = p;
-			p = q;
-			q = r;
-			r = r.next;
-		}
-
-		q.next = p;
-
-		return q;
-	}
-	
-	//recursive reverse
-	Node<T> reverseSLLRecursive(Node<T> head) {
-		if(head == null)
-			return head;
-		
-		Node<T> first = head;
-		Node<T> rest = head.next;
-		
-		if(rest == null)
-			return first;
-		
-		head = reverseSLLRecursive(rest);
-		
-		first.next.next = first;
-		first.next = null;
-		
-		return head;
-	}
-	
-	Node<T> mergeSort(Node<T> head) {
-		if(head == null || head.next == null)
-			return head;
-		
-		Node<T> a = head;
-		Node<T> b = null;
-		
-		Node<T> slow = head;
-		Node<T> fast = head.next;
-		
-		//find middle node
-		while(fast.next != null) {
-			fast = fast.next;
-			
-			if(fast.next != null) {
-				fast = fast.next;
-				slow = slow.next;
-			}
-		}
-		
-		//get element after middle element
-		b = slow.next;
-		
-		//split two SLL
-		slow.next = null;
-		
-		a = mergeSort(a);
-		b = mergeSort(b);
-		
-		return mergeSLL(a, b);
-	}
-
-	private Node<T> mergeSLL(Node<T> a, Node<T> b) {
-		if(a == null && b == null) {
-			return null;
-		}
-		
-		if(a == null) {
-			return b;
-		}
-		
-		if(b == null) {
-			return a;
-		}
-		
-		Node<T> result = null;
-		
-		if(a.key.compareTo(b.key) <= 0) {
-			//result = a;
-			a.next = mergeSLL(a.next, b);
-			return a;
-		} else if(a.key.compareTo(b.key) > 0) {
-			//result = b;
-			b.next = mergeSLL(a, b.next);
-			return b;
-		}
-		
-		return result;
-	}
-	
-	private boolean isPalindrome(Node<T> head) {
-		if(head == null || head.next == null)
-			return true;
-		
-		//get middle node of LL
-		Node<T> middle = getMiddleNode(head, true);
-		
-		//reverse linked list from middle element to rest
-		Node<T> head2 = reverseSLL(middle);
-		
-		//check nodes from first list with second list
-		//if the values are not same LL is not palindrome
-		Node<T> curr1 = head;
-		Node<T> curr2 = head2;
-		
-		//when both list has data
-		//second list may have middle element at last. In case of odd length LL last element of second list is not checked
-		while(curr1 != null && curr2 != null) {
-			//mismatch found
-			if(curr1.key.compareTo(curr2.key) != 0) {
-				return false;
-			}
-			
-			curr1 = curr1.next;
-			curr2 = curr2.next;
-		}
-		
-		//restore the LL
-		head2 = reverseSLL(head2);
-		
-		curr1 = head;
-		
-		while(curr1.next != null) {
-			curr1 = curr1.next;
-		}
-		
-		//establish the link
-		curr1.next = head2;
-		
-		return true;
-	}
-	
-	private Node<T> getMiddleNode(Node<T> head, boolean split) {
-		if(head == null)
-			return head;
-		
-		Node<T> slow = head;
-		Node<T> fast = slow.next;
-		
-		while(fast.next != null) {
-			fast = fast.next;
-			
-			if(fast.next != null) {
-				slow = slow.next;
-				fast = fast.next;
-			}
-		}
-		
-		Node<T> temp = slow.next;
-		
-		//if flag is true split the LL
-		if(split) {
-			slow.next = null;
-		}
-		
-		return temp;
-	}
-	
 	static class Node<T extends Comparable<T>> {
 		T key;
 		Node<T> next;
 
-		Node() {
-
-		}
+		Node() {}
 
 		Node(T key) {
 			this.key = key;
 			this.next = null;
 		}
 	}
-	
+
 	static class Sum {
 		int carry = 0;
 		int sum = 0;
 	}
 }
-
-

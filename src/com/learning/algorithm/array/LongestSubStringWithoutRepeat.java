@@ -77,7 +77,7 @@ public class LongestSubStringWithoutRepeat {
 			// update char location in map
 			map.put(c, i);
 		}
-
+		
 		// print the string
 		System.out.println("Max string: "
 				+ str.substring(end + 1 - maxLength, end + 1)

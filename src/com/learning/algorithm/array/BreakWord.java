@@ -67,7 +67,7 @@ public class BreakWord {
 					continue;
 			}
 				
-			if(i == L && table[i]) {
+			if(i == L) {
 				return true;
 			}
 			
@@ -81,7 +81,7 @@ public class BreakWord {
 					}
 				}
 				
-				if(j == L && table[j]) {
+				if(j == L) {
 					return true;
 				}
 			}

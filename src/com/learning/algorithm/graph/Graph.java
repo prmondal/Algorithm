@@ -1,9 +1,11 @@
 package com.learning.algorithm.graph;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Graph {
@@ -220,6 +222,39 @@ public class Graph {
 			System.out.print(i + " ");
 		}
 	}
+	
+	//bfs and 2-color algo
+	static boolean isBipartite(Graph g) {
+		//-1 : no color, 0 : color-1, 1 : color-2
+		int[] color = new int[g.getV()];
+		Arrays.fill(color, -1); 
+		
+		Queue<Integer> queue = new LinkedList<Integer>();
+		
+		queue.add(0);
+		color[0] = 0;
+		
+		while(!queue.isEmpty()) {
+			int u = queue.poll();
+			
+			//try coloring all adjacent vertices with alternate color
+			for(int v : g.getAdjNodes(u)) {
+				//if adjacent vertex color is same as current node return false
+				if(color[v] != -1 && color[v] == color[u]) {
+					return false;
+				}
+				
+				//adjacent is not colored yet
+				if(color[v] == -1) {
+					color[v] = 1 - color[u];
+					queue.add(v);
+				}
+			}		
+		}
+		
+		//can be colored using 2 color
+		return true;
+	}
 
 	public static void main(String[] args) {
 		System.out.println("\n === Directed graph edges === ");
@@ -260,5 +295,15 @@ public class Graph {
 		} else {
 			System.out.println("Graph does not have cycle.");
 		}
+		
+		System.out.println("\n===== Bipartiteness check ======");
+		g = new Graph(10, false);
+		g.addEdge(0, 5);
+		g.addEdge(1, 4);
+		g.addEdge(2, 3);
+		g.addEdge(0, 1);
+		g.addEdge(1, 2);
+		
+		System.out.println(isBipartite(g));
 	}
 }

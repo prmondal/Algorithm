@@ -35,12 +35,13 @@ public class LiveMedianTracking {
 		//insert first element
 		maxHeap.add(Integer.valueOf(input));
 		
+		count++;
+		
 		displayQueue(maxHeap, minHeap);
+		
 		System.out.println("Count is " + ((count % 2 == 0) ? "even" : "odd"));
 		
 		System.out.println("Median is " + maxHeap.peek());
-		
-		count++;
 		
 		//enter more elems
 		while(true) {
@@ -51,8 +52,6 @@ public class LiveMedianTracking {
 			if(String.valueOf(input).equals("q")){
 				break;
 			}
-			
-			
 			
 			//even
 			if(count % 2 == 0) {

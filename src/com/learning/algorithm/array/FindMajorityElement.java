@@ -1,6 +1,6 @@
 package com.learning.algorithm.array;
 
-public class FindMajorityElemenet {
+public class FindMajorityElement {
 	public static void main(String[] args) {
 		int[] a = { 8, 1, 8, 5, 8, 1, 8 };
 					// {1, 3, 3, 1, 2}; //no solution

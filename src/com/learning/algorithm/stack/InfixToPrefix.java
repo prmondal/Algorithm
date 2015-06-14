@@ -37,7 +37,8 @@ public class InfixToPrefix {
 				while (stack.peek() != '(' && !stack.isEmpty()) {
 					System.out.print(stack.pop());
 				}
-
+				
+				//remove (
 				stack.pop();
 
 				i++;
