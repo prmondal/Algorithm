@@ -290,8 +290,8 @@ public class BST<T extends Comparable<T>> {
 		tree.toSumTreeWithGreaterKeys(r4);
 
 		tree.printInOrder(r4);
-		
-		//print kdistance node
+
+		// print kdistance node
 		Node<Integer> r5 = new Node<Integer>(8);
 
 		// insert node
@@ -301,9 +301,17 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r5, 20);
 		tree.insertNode(r5, 10);
 		tree.insertNode(r5, 30);
-		
+
 		System.out.println("\n === Print K-dist nodes down === ");
 		tree.printKDistNode(r5, 4, 2);
+		
+		System.out.println("\n" + tree.getSuccessor(r5, 10).key);
+		
+		System.out.println("\n Ceil: " + tree.ceil(r5, 39));
+		
+		//Build BST from preorder
+		Node<Integer> rootPre = tree.buildTree(new int[] {5,4,3,2,1});
+		tree.printInOrder(rootPre);
 	}
 
 	void printDLL(Node<T> head) {
@@ -1242,56 +1250,58 @@ public class BST<T extends Comparable<T>> {
 
 		printKthSmallest(root.right, k, count);
 	}
-	
+
 	void printKDistNodesDown(Node<Integer> root, int k) {
-		if(root == null || k < 0) return;
-		
-		if(k == 0) {
+		if (root == null || k < 0)
+			return;
+
+		if (k == 0) {
 			System.out.print(root.key + " ");
 			return;
 		}
-		
+
 		printKDistNodesDown(root.left, k - 1);
 		printKDistNodesDown(root.right, k - 1);
 	}
-	
+
 	int printKDistNode(Node<Integer> root, Integer t, int k) {
-		if(root == null || k < 0) return -1;
-		
-		//print k-distance node down
-		if(root.key.compareTo(t) == 0) {
+		if (root == null || k < 0)
+			return -1;
+
+		// print k-distance node down
+		if (root.key.compareTo(t) == 0) {
 			printKDistNodesDown(root, k);
 			return 0;
 		}
-		
-		//distance between left node and target
+
+		// distance between left node and target
 		int dl = printKDistNode(root.left, t, k);
-		
-		if(dl != -1) {
-			//current node is at k distance from target
-			if(1 + dl == k) {
+
+		if (dl != -1) {
+			// current node is at k distance from target
+			if (1 + dl == k) {
 				System.out.print(root.key + " ");
 			} else {
 				printKDistNodesDown(root.right, k - dl - 2);
 			}
-			
+
 			return 1 + dl;
 		}
-		
-		//same for right tree
+
+		// same for right tree
 		int dr = printKDistNode(root.right, t, k);
-		
-		if(dr != -1) {
-			//current node is at k distance from target
-			if(1 + dr == k) {
+
+		if (dr != -1) {
+			// current node is at k distance from target
+			if (1 + dr == k) {
 				System.out.print(root.key + " ");
 			} else {
 				printKDistNodesDown(root.left, k - dr - 2);
 			}
-			
+
 			return 1 + dr;
 		}
-		
+
 		return -1;
 	}
 
@@ -1370,7 +1380,7 @@ public class BST<T extends Comparable<T>> {
 		if (root == null) {
 			return root;
 		}
-
+		
 		Node<T> curr = root;
 
 		// if root does not have left child
@@ -1383,6 +1393,98 @@ public class BST<T extends Comparable<T>> {
 			;
 
 		return curr;
+	}
+
+	Node<T> getSuccessor(Node<T> root, T n) {
+		if (root == null) {
+			return root;
+		}
+
+		Node<T> curr = root, succ = null;
+
+		while (curr != null) {
+			if(curr.key.compareTo(n) == 0) {
+				//if the node has right child return minimum in the right tree
+				if(curr.right != null) {
+					return getMinNodeRightSubTree(curr.right);
+				}
+				
+				break;
+			}
+			
+			if(curr.key.compareTo(n) > 0) {
+				succ = curr;
+				curr = curr.left;
+			} else {
+				curr = curr.right;
+			}
+		}
+
+		return succ;
+	}
+	
+	T ceil(Node<T> root, T k) {
+		if(root == null) return null;
+		
+		if(root.key.compareTo(k) == 0) {
+			return root.key;
+		}
+		
+		if(root.key.compareTo(k) < 0) {
+			return ceil(root.right, k);
+		}
+		
+		T key = ceil(root.left, k);
+		
+		return (key != null) ? key : root.key;
+	}
+	
+	//build BST from preorder
+	/*
+	 1. Create an empty stack.
+
+	 2. Make the first value as root. Push it to the stack.
+
+     3. Keep on popping while the stack is not empty and the next value is greater than stack’s top value. Make this value as the right child of the last popped node. Push the new node to the stack.
+
+     4. If the next value is less than the stack’s top value, make this value as the left child of the stack’s top node. Push the new node to the stack.
+
+     5. Repeat steps 2 and 3 until there are items remaining in pre[].
+	 */
+	Node<Integer> buildTree(int[] pre) {
+		int l = pre.length;
+		
+		if(l == 0) return null;
+		
+		Node<Integer> root = new Node<Integer>(pre[0]);
+		
+		if(l == 1) return root;
+		
+		Stack<Node<Integer>> stack = new Stack<Node<Integer>>();
+		
+		stack.push(root);
+		
+		for(int i = 1; i < l; i++) {
+			Node<Integer> top = stack.peek();
+			
+			if(pre[i] < top.key) {
+				Node<Integer> _new = new Node<Integer>(pre[i]);
+				top.left = _new;
+				stack.push(_new);
+			} else {
+				Node<Integer> lastNode = null;
+				
+				while(!stack.isEmpty() && stack.peek().key < pre[i]) {
+					lastNode = stack.pop();
+				}
+				
+				Node<Integer> _new = new Node<Integer>(pre[i]);
+				if(lastNode != null) lastNode.right = _new;
+				stack.push(_new);
+			}
+		}
+		
+		return root;
 	}
 
 	static class Node<T extends Comparable<T>> {

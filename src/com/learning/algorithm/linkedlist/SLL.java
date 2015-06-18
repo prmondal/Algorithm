@@ -20,8 +20,9 @@ public class SLL<T extends Comparable<T>> {
 		ll.insertNode(head, 8);
 		ll.insertNode(head, 9);
 
-		// print list
-		ll.printSLL(head);
+		// reverse in group
+		Node<Integer> res = ll.reverseInGroup(head, 5);
+		ll.printSLL(res);
 	}
 
 	// find size
@@ -253,7 +254,7 @@ public class SLL<T extends Comparable<T>> {
 	
 	//iterative reverse
 	Node<T> reverseSLL(Node<T> head) {
-		if (head == null) {
+		if (head == null || head.next == null) {
 			return head;
 		}
 
@@ -289,6 +290,32 @@ public class SLL<T extends Comparable<T>> {
 		first.next = null;
 
 		return head;
+	}
+	
+	//recursive reverse group of k nodes
+	Node<T> reverseInGroup(Node<T> head, int k) {
+		if(head == null || k < 2) {
+			return head;
+		}
+		
+		Node<T> curr = head, prev = null, next = null;
+		int count = 0;
+		
+		//iterative reverse K nodes
+		while(curr != null && count < k) {
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+			
+			count++;
+		}
+		
+		if(next != null) {
+			head.next = reverseInGroup(next, k);
+		}
+		
+		return prev;
 	}
 
 	Node<T> mergeSort(Node<T> head) {
