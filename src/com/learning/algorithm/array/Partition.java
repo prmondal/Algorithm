@@ -54,6 +54,32 @@ public class Partition {
 			k++;
 		}
 	}
+	
+	//using dutch national flag algo O(N)
+	static void threeWayPartition(int[] a, int N) {
+		int l = 0, mid = 0, h = N - 1;
+		int pivot = a[h];
+
+		while (mid < h) {
+			if (a[mid] < pivot) {
+				int c = a[l];
+				a[l] = a[mid];
+				a[mid] = c;
+
+				l++;
+				mid++;
+			} else if (a[mid] > pivot) {
+				int c = a[mid];
+				a[mid] = a[h];
+				a[h] = c;
+
+				h--;
+			} else
+				mid++;
+		}
+		
+		System.out.println("\n" + l + " " + mid);
+	}
 
 	private static void partition(int[] a) {
 		int L = a.length;
@@ -90,6 +116,29 @@ public class Partition {
 				
 				k++;
 			}
+		}
+	}
+	
+	//sort 0s, 1s, 2s
+	static void sort(char[] a, int N) {
+		int l = 0, mid = 0, h = N - 1;
+
+		while (mid < h) {
+			if (a[mid] == 'R') {
+				char c = a[l];
+				a[l] = a[mid];
+				a[mid] = c;
+
+				l++;
+				mid++;
+			} else if (a[mid] == 'B') {
+				char c = a[mid];
+				a[mid] = a[h];
+				a[h] = c;
+
+				h--;
+			} else
+				mid++;
 		}
 	}
 	

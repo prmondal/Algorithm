@@ -103,7 +103,6 @@ public class IntervalTree {
 			result.add(root.i);
 		}
 		
-		//recur to left if t.low < root.low
 		getOverlappingIntervals(root.left, t, result);
 		getOverlappingIntervals(root.right, t, result);
 		

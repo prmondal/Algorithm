@@ -22,8 +22,7 @@ public class PalindromeIndex {
 				if (c == e) {
 					if (i == l / 2 - 1) {
 						System.out.println(-1);
-					} else
-						continue;
+					}
 				} else {
 					if (i == l / 2 - 1) {
 						if (sb.charAt(l / 2) == sb.charAt(i)) {

@@ -21,7 +21,7 @@ public class SLL<T extends Comparable<T>> {
 		ll.insertNode(head, 9);
 
 		// reverse in group
-		Node<Integer> res = ll.reverseInGroup(head, 5);
+		Node<Integer> res = ll.reverseInGroup(head, 2);
 		ll.printSLL(res);
 	}
 

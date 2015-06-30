@@ -9,7 +9,7 @@ public class BIT1D {
 
 		// init BIT array
 		BIT = new int[n + 1];
-
+		
 		// initialize BIT for the given array
 		init(A, n);
 		

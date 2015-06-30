@@ -312,6 +312,26 @@ public class BST<T extends Comparable<T>> {
 		//Build BST from preorder
 		Node<Integer> rootPre = tree.buildTree(new int[] {5,4,3,2,1});
 		tree.printInOrder(rootPre);
+		
+		// root node
+		Node<Integer> r6 = new Node<Integer>(100);
+
+		// insert nodes
+		tree.insertNode(r6, 10);
+		tree.insertNode(r6, 200);
+		tree.insertNode(r6, 8);
+		tree.insertNode(r6, 20);
+		tree.insertNode(r6, 150);
+		tree.insertNode(r6, 300);
+		tree.insertNode(r6, 6);
+		tree.insertNode(r6, 9);
+		tree.insertNode(r6, 15);
+		tree.insertNode(r6, 25);
+		tree.insertNode(r6, 130);
+		tree.insertNode(r6, 180);
+		tree.insertNode(r6, 250);
+		
+		tree.printZigZagIterative(r6);
 	}
 
 	void printDLL(Node<T> head) {
@@ -509,9 +529,10 @@ public class BST<T extends Comparable<T>> {
 			System.out.println();
 		}
 	}
-
+	
+	//recursive
 	void printZigZag(Node<T> root) {
-		System.out.println("\nPrint ZigZag: ");
+		System.out.println("\n ===== ZigZag print ======");
 
 		if (root == null)
 			return;
@@ -525,6 +546,49 @@ public class BST<T extends Comparable<T>> {
 			leftToRight = !leftToRight;
 
 			System.out.println("\n");
+		}
+	}
+	
+	void printZigZagIterative(Node<T> root) {
+		if(root == null)
+			return;
+		
+		System.out.println("\n ===== ZigZag print ======");
+		Stack<Node<T>> left = new Stack<Node<T>>();
+		Stack<Node<T>> right = new Stack<Node<T>>();
+		
+		left.push(root);
+		
+		while(!(left.isEmpty() && left.isEmpty())) {
+			while(!left.isEmpty()) {
+				Node<T> top = left.pop();
+				System.out.print(top.key + " ");
+				
+				if(top.left != null) {
+					right.push(top.left);
+				}
+				
+				if(top.right != null) {
+					right.push(top.right);
+				}
+			}
+			
+			System.out.println();
+			
+			while(!right.isEmpty()) {
+				Node<T> top = right.pop();
+				System.out.print(top.key + " ");
+				
+				if(top.right != null) {
+					left.push(top.right);
+				}
+				
+				if(top.left != null) {
+					left.push(top.left);
+				}
+			}
+			
+			System.out.println();
 		}
 	}
 

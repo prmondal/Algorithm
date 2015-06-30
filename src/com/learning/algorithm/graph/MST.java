@@ -197,7 +197,7 @@ public class MST {
 		int id;
 		int cost;
 		boolean visited;
-		private Node parent = null;
+		Node parent = null;
 		ArrayList<Edge> childs;
 
 		Node(int id, int cost) {
