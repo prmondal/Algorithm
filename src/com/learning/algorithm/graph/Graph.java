@@ -1,5 +1,6 @@
 package com.learning.algorithm.graph;
 
+import java.awt.PrintGraphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -87,11 +88,9 @@ public class Graph {
 		// node is visited
 		visited[i] = true;
 
-		List<Integer> list = g.getAdjNodes(i);
-
-		for (int n : list) {
-			if (!visited[n]) {
-				dfs(g, n, visited, stack);
+		for (int adj : g.getAdjNodes(i)) {
+			if (!visited[adj]) {
+				dfs(g, adj, visited, stack);
 			}
 		}
 
@@ -255,6 +254,68 @@ public class Graph {
 		//can be colored using 2 color
 		return true;
 	}
+	
+	static void printSCCs(Graph g) {
+		System.out.println("\n ======= SCC ========");
+		
+		int V = g.getV();
+		
+		//DFS in forward graph to calculate finish times of all the nodes and insert the nodes in stack if there are no unvisited neighbors or no child
+		boolean[] visited = new boolean[V];
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		for(int i = 0; i < V; i++) {
+			if(!visited[i]) {
+				dfs(g, i, visited, stack);
+			}
+		}
+		
+		//reverse the graph and pop nodes from stack and dfs for each removed nodes to find the SCCs
+		/*for(int i = 0; i < stack.size(); i++) {
+			System.out.print(stack.get(i) + " ");
+		}*/
+		
+		Graph revG = new Graph(V, true);
+		
+		for(int i = 0; i < V; i++) {
+			for(int j : g.getAdjNodes(i)) {
+				revG.addEdge(j, i);
+			}
+		}
+		
+		visited = new boolean[V];
+		
+		while(!stack.isEmpty()) {
+			int i = stack.pop();
+			
+			if(!visited[i]) {
+				printSCC(revG, i, visited);
+				System.out.println();
+			}
+		}
+	}
+	
+	private static void printSCC(Graph g, int i, boolean[] visited) {
+		visited[i] = true;
+
+		for (int adj : g.getAdjNodes(i)) {
+			if (!visited[adj]) {
+				printSCC(g, adj, visited);
+			}
+		}
+		
+		System.out.print(i + " ");
+	}
+	
+	static void print(Graph g) {
+		int V = g.getV();
+		
+		for(int i = 0; i < V; i++) {
+			for(int j : g.getAdjNodes(i)) {
+				System.out.println(i + " --> " + j);
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		System.out.println("\n === Directed graph edges === ");
@@ -305,5 +366,14 @@ public class Graph {
 		g.addEdge(1, 2);
 		
 		System.out.println(isBipartite(g));
+		
+		g = new Graph(5, true);
+		g.addEdge(0, 1);
+		g.addEdge(1, 2);
+		g.addEdge(1, 3);
+		g.addEdge(2, 0);
+		g.addEdge(3, 4);
+		
+		printSCCs(g);
 	}
 }

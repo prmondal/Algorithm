@@ -4,21 +4,18 @@ package com.learning.algorithm.bits;
 public class BitsFun {
 
 	public static void main(String[] args) {
-		int n = 11;
-		System.out.println("Original number: " + Integer.toBinaryString(n));
-		System.out.println("Reverse number: "
-				+ Integer.toBinaryString(reverse(n)));
-
-		System.out.println(toggleKthBit(5, 0));
+		int n = 123;
+		System.out.println(n + " - " + Integer.toBinaryString(n));
+		System.out.println(Integer.toBinaryString((int)reverseUsingXOR(n)));
 	}
 
 	// find length of the integer in number of bits
-	static int getBitLength(int n) {
-		return (int) Math.ceil(Math.log((double) n) / Math.log(2.0));
+	static int getBitLength(long n) {
+		return (int) Math.ceil(Math.log((double) (n + 1)) / Math.log(2.0));
 	}
 
 	// reverse integer
-	static int reverse(int n) {
+	static long reverse(long n) {
 		if (n == 0)
 			return n;
 
@@ -35,6 +32,20 @@ public class BitsFun {
 
 		return reverse;
 	}
+	
+	//reverse integer using XOR
+	static long reverseUsingXOR(long n) {
+		int c = getBitLength(n);
+		
+		for(int i = 0; i < c / 2 ; i++) {
+			if(!equal(n, i, c - i - 1)) {
+				n = toggleKthBit(n, i);
+				n = toggleKthBit(n, c - i - 1);
+			}
+		}
+		
+		return n;
+	}
 
 	static int countOnes(long n) {
 		int count = 0;
@@ -45,6 +56,16 @@ public class BitsFun {
 		}
 
 		return count;
+	}
+	
+	//get ith bit
+	static int getithBit(long n, int i) {
+		return ((int) (n & 1 << i) != 0) ? 1 : 0;
+	}
+	
+	//check if two bits are equal or not
+	static boolean equal(long n, int i, int j) {
+		return getithBit(n, i) == getithBit(n, j);
 	}
 
 	static boolean isOdd(long n) {
