@@ -91,7 +91,7 @@ public class Dijkstra {
 						n.dist = min.dist + edgeCost[min.key][n.key];
 						n.parent = min;
 
-						// add the node is it is not already present in the
+						// add the node if it is not already present in the
 						// queue
 						if (!pq.contains(n))
 							pq.add(n);

@@ -375,5 +375,26 @@ public class Graph {
 		g.addEdge(3, 4);
 		
 		printSCCs(g);
+		
+		g = new Graph(9, true);
+		g.addEdge(0, 1);
+		g.addEdge(1, 2);
+		g.addEdge(2, 3);
+		g.addEdge(3, 1);
+		g.addEdge(2, 0);
+		g.addEdge(3, 4);
+		g.addEdge(4, 2);
+		g.addEdge(1, 5);
+		g.addEdge(5, 5);
+		g.addEdge(6, 7);
+		g.addEdge(7, 8);
+		g.addEdge(8, 6);
+		
+		printSCCs(g);
+		
+		g = new Graph(4, true);
+		g.addEdge(0, 1);g.addEdge(1, 2);g.addEdge(2, 3);
+		printSCCs(g);
+		
 	}
 }

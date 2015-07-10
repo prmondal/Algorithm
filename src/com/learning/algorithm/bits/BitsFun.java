@@ -7,6 +7,8 @@ public class BitsFun {
 		int n = 123;
 		System.out.println(n + " - " + Integer.toBinaryString(n));
 		System.out.println(Integer.toBinaryString((int)reverseUsingXOR(n)));
+		
+		System.out.println(isPalindrome(9));
 	}
 
 	// find length of the integer in number of bits
@@ -45,6 +47,19 @@ public class BitsFun {
 		}
 		
 		return n;
+	}
+	
+	//check for palindrome
+	static boolean isPalindrome(long n) {
+		int c = getBitLength(n);
+		
+		for(int i = 0; i < c / 2; i++) {
+			if(!equal(n, i, c - i - 1)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	static int countOnes(long n) {

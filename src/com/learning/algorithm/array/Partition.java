@@ -119,7 +119,7 @@ public class Partition {
 		}
 	}
 	
-	//sort 0s, 1s, 2s
+	//sort Rs, Gs, Bs
 	static void sort(char[] a, int N) {
 		int l = 0, mid = 0, h = N - 1;
 

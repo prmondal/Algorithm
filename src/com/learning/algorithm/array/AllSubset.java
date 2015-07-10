@@ -75,6 +75,25 @@ public class AllSubset {
 			System.out.println();
 		}
 	}
+	
+	static void printSubsetBit(char[] a) {
+		int L = a.length;
+		int sub = (int) Math.pow(2, L);
+				
+		for(int s = 0; s < sub; s++) {
+			int j = 0;
+			
+			while(j < L) {
+				if((s & (1 << j)) != 0) {
+					System.out.print(a[j]);
+				}
+				
+				j++;
+			}
+			
+			System.out.println();
+		}
+	}
 
 	private static void printSubSet(Stack<Character> stack) {
 		for(Character c: stack) {

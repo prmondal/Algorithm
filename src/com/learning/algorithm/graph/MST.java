@@ -69,7 +69,7 @@ public class MST {
 		for (Edge e : s.childs)
 			pq.add(e);
 
-		// total edges for N node is N - 1
+		// continue the loop till all vertices are included in the tree
 		for (int i = 1; i <= g.V - 1; i++) {
 			Edge min = pq.poll();
 

@@ -1,132 +1,133 @@
 package com.learning.algorithm.linkedlist;
 
 public class DLL<T extends Comparable<T>> {
+	private int size = 0;
+	private int MAX_SIZE = 100;
+	private Node<T> head = null;
+	private Node<T> tail = null;
 
-	public static void main(String[] args) {
-		DLL<Integer> dll = new DLL<Integer>();
-
-		Node<Integer> head = null;
-
-		// insert nodes
-		head = dll.insert(head, 100);
-		head = dll.insert(head, 200);
-		head = dll.insert(head, 300);
-		head = dll.insert(head, 400);
-		head = dll.insert(head, 500);
-		head = dll.insert(head, 600);
-
-		// print mid
-		System.out.println("Mid: " + dll.mid.key);
-
-		// printList
-		dll.printList(head);
-
-		head = dll.pop(head);
-
-		System.out.println("Mid: " + dll.mid.key);
-
-		// printList
-		dll.printList(head);
-	}
-
-	// track of total number of nodes in the list
-	static int count = 0;
-
-	// mid node reference
-	Node<T> mid = null;
-
-	private void printList(Node<T> head) {
-		System.out.println();
-
-		if (head == null)
+	public void insertFront(T k) {
+		if(size >= MAX_SIZE) {
 			return;
-
-		while (head != null) {
-			System.out.print(head.key + " ");
-
-			head = head.next;
 		}
-
-		System.out.println();
-	}
-
-	Node<T> insert(Node<T> head, T key) {
-		Node<T> newNode = new Node<T>(key);
-
+		
 		if (head == null) {
-			// insert first node
-			head = newNode;
+			head = tail = new Node<T>(k);
+			size++;
 
-			// assign mid node
-			// first node in the list. mid points to head node
-			mid = head;
-
-			count++;
-
-			return head;
+			return;
 		}
 
-		newNode.next = head;
-		head.prev = newNode;
+		Node<T> _new = new Node<T>(k);
 
-		head = newNode;
+		_new.next = head;
+		_new.next.prev = _new;
 
-		count++;
+		head = _new;
 
-		// if count is odd mid points to middle element
-		// shifts mid left one position
-		if (count % 2 != 0) {
-			mid = mid.prev;
-		}
-
-		return head;
+		size++;
 	}
 
-	Node<T> pop(Node<T> head) {
-		if (head == null)
-			return head;
+	public void insertBack(T k) {
+		if(size >= MAX_SIZE) {
+			return;
+		}
+		
+		if (tail == null) {
+			tail = head = new Node<T>(k);
+			size++;
 
-		Node<T> popNode = head;
-		head = popNode.next;
-
-		if (head != null)
-			head.prev = null;
-
-		popNode.next = null;
-
-		count--;
-
-		if (count == 0) {
-			mid = null;
-		} else if (count % 2 == 0) {
-			// move to right
-			mid = mid.next;
+			return;
 		}
 
-		return head;
+		Node<T> _new = new Node<T>(k);
+
+		tail.next = _new;
+		_new.prev = tail;
+
+		tail = _new;
+
+		size++;
 	}
 
-	void printTotalNodes(Node<T> head) {
-		System.out.println();
-
-		if (head == null)
-			System.out.println("There are no nodes.");
-
-		int count = 0;
-
-		while (head != null) {
-			count++;
-
-			head = head.next;
+	public Node<T> removeFront() {
+		if (head == null) {
+			return null;
 		}
 
-		System.out.println("Total number of nodes: " + count);
+		Node<T> front = head;
+
+		head = front.next;
+		head.prev = null;
+		front.next = null;
+
+		size--;
+
+		return front;
+	}
+
+	public Node<T> removeBack() {
+		if (tail == null) {
+			return null;
+		}
+
+		Node<T> back = tail;
+		System.out.println(back.prev.key);
+		tail = back.prev;
+		tail.next = null;
+		back.prev = null;
+
+		size--;
+
+		return back;
+	}
+	
+	public void remove(Node<T> n) {
+		if(head == null) return;
+		
+		n.prev.next = n.next;
+		n.next.prev = n.prev;
+		
+		n.prev = null;
+		n.next = null;
+		
+		size--;
+	}
+	
+	public Node<T> peekFirst() {
+		if(head == null) return null;
+		
+		return head;
+	}
+	
+	public Node<T> peekLast() {
+		if(tail == null) return null;
+		
+		return tail;
+	}
+
+	public void print() {
+		Node<T> curr = head;
+
+		while (curr != null) {
+			System.out.print(curr.key + " ");
+
+			curr = curr.next;
+		}
+
+		/*curr = tail;
+
+		while (curr != null) {
+			System.out.print(curr.key + " ");
+
+			curr = curr.prev;
+		}*/
 	}
 
 	static class Node<T> {
 		T key;
-		Node<T> next;
-		Node<T> prev;
+		Node<T> next = null;
+		Node<T> prev = null;
 
 		Node() {
 
@@ -134,8 +135,55 @@ public class DLL<T extends Comparable<T>> {
 
 		Node(T key) {
 			this.key = key;
-			this.next = null;
-			this.prev = null;
 		}
+	}
+
+	public Node<T> getHead() {
+		return head;
+	}
+
+	public void setHead(Node<T> head) {
+		this.head = head;
+	}
+
+	public Node<T> getTail() {
+		return tail;
+	}
+
+	public void setTail(Node<T> tail) {
+		this.tail = tail;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public static void main(String[] args) {
+		DLL<String> dll = new DLL<String>();
+
+		dll.insertFront("z");
+		dll.insertFront("y");
+		dll.insertBack("x");
+
+		dll.print();
+		System.out.println("\nSize: " + dll.getSize());
+
+		//Node<String> back = dll.removeFront();
+		//System.out.println("\nRemove from front: " + back.key);
+
+		//dll.print();
+		//System.out.println("\nSize: " + dll.getSize());
+	}
+
+	public int getMAX_SIZE() {
+		return MAX_SIZE;
+	}
+
+	public void setMAX_SIZE(int mAX_SIZE) {
+		MAX_SIZE = mAX_SIZE;
 	}
 }

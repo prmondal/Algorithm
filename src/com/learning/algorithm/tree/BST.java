@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 public class BST<T extends Comparable<T>> {
 	static int sum = 0;
-
+	
 	public static void main(String[] args) {
 		BST<Integer> tree = new BST<Integer>();
 
@@ -97,7 +97,7 @@ public class BST<T extends Comparable<T>> {
 		// tree.printInOrder(tree.duplicateLeftNode(root));
 
 		// to DLL
-		// tree.printDLL(tree.getLeftMostNode(tree.toDLL(root)));
+		// tree.printDLL(tree.toDLL(root));
 
 		// print vertical order
 		TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<Integer, ArrayList<Integer>>();
@@ -332,6 +332,30 @@ public class BST<T extends Comparable<T>> {
 		tree.insertNode(r6, 250);
 		
 		tree.printZigZagIterative(r6);
+		
+		//DLL to BST
+		Node<Integer> r7 = new Node<Integer>(6);
+		
+		tree.insertNode(r7, 4);
+		tree.insertNode(r7, 5);
+		tree.insertNode(r7, 2);
+		tree.insertNode(r7, 1);
+		tree.insertNode(r7, 3);
+		tree.insertNode(r7, 8);
+		tree.insertNode(r7, 7);
+		tree.insertNode(r7, 10);
+		tree.insertNode(r7, 9);
+		tree.insertNode(r7, 11);
+		
+		tree.printInOrder(r7);
+		Node<Integer> head = tree.toDLL(r7);
+		
+		tree.printDLL(head);
+		
+		DLLNode<Integer> dllHead = new DLLNode<Integer>(head);
+		
+		System.out.println("\nDLL to BST");
+		tree.printInOrder(tree.convertDLLToBST(dllHead, tree.getLLSize(head)));
 	}
 
 	void printDLL(Node<T> head) {
@@ -356,6 +380,18 @@ public class BST<T extends Comparable<T>> {
 		}
 
 		System.out.print(tail.key);
+	}
+	
+	//count size of LL
+	int getLLSize(Node<T> head) {
+		int size = 0;
+		
+		while(head != null) {
+			head = head.right;
+			size++;
+		}
+		
+		return size;
 	}
 
 	void insertNode(Node<T> root, T key) {
@@ -947,8 +983,7 @@ public class BST<T extends Comparable<T>> {
 			Node<T> l = toDLL(root.left);
 
 			// get inorder predecessor of root
-			for (; l.right != null; l = l.right)
-				;
+			for (; l.right != null; l = l.right);
 
 			l.right = root;
 			root.left = l;
@@ -959,19 +994,33 @@ public class BST<T extends Comparable<T>> {
 			Node<T> r = toDLL(root.right);
 
 			// get inorder successor of root
-			for (; r.left != null; r = r.left)
-				;
+			for (; r.left != null; r = r.left);
 
 			r.left = root;
 			root.right = r;
 		}
 
+		return getLeftMostNode(root);
+	}
+	
+	Node<T> convertDLLToBST(DLLNode<T> dllHead, int n) {
+		if(n <= 0) return null;
+		
+		Node<T> left = convertDLLToBST(dllHead, n / 2);
+		
+		Node<T> root = dllHead.head;
+		
+		root.left = left;
+		
+		dllHead.head = dllHead.head.right;
+		
+		root.right = convertDLLToBST(dllHead, n - n / 2 - 1);
+		
 		return root;
 	}
 
 	Node<T> getLeftMostNode(Node<T> root) {
-		for (; root.left != null; root = root.left)
-			;
+		for (; root.left != null; root = root.left);
 
 		return root;
 	}
@@ -1579,6 +1628,14 @@ public class BST<T extends Comparable<T>> {
 
 		Count() {
 			c = 0;
+		}
+	}
+	
+	static class DLLNode <T extends Comparable<T>> {
+		Node<T> head;
+		
+		DLLNode(Node<T> head) {
+			this.head = head;
 		}
 	}
 }
