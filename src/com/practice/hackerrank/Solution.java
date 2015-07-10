@@ -9,27 +9,9 @@ import java.util.regex.*;
 public class Solution {
 	static final int BIN_MAX = 1000;
 	static long[][] binomial = new long[BIN_MAX + 1][BIN_MAX + 1];
+	static long MOD = 1000000007;
 
-	// method of Lilavati
-	/*static long bin(int n, int k) {
-		if (n < k || n == 0) {
-			binomial[n][k] = 0;
-			return 0;
-		}
-
-		if (k == 0) {
-			binomial[n][k] = 1;
-			return 1;
-		}
-
-		if (binomial[n][k] != 0)
-			return binomial[n][k];
-
-		binomial[n][k] = (n / k) * bin(n - 1, k - 1);
-		return binomial[n][k];
-	}*/
-	
-	static long bin(int N, int K) {
+	static long cacheBin(int N, int K) {
 	      if (K < 0) {
 	          return 0;
 	      }
@@ -49,8 +31,30 @@ public class Solution {
 
 	      binomial[N][K] = bin(N - 1, K - 1) + bin(N - 1, K);
 	      return binomial[N][K];
-	  }
-
+	 }
+	
+	//find C(N, K)
+	static long bin(int N, int K) {
+		if(N < K) return -1;
+		long[][] table = new long[N + 1][N + 1];
+		
+		for(int n = 0; n <= N; n++) {
+			table[n][0] = 1; 
+		}
+		
+		for(int n = 0; n <= N; n++) {
+			table[n][n] = 1; 
+		}
+		
+		for(int n = 1; n <= N; n++) {
+			for(int k = 1; k <= Math.min(n,  K); k++) {
+				table[n][k] = table[n - 1][k - 1] + table[n - 1][k];
+			}
+		}
+		
+		return table[N][K];
+	}
+	
 	// reverse a string from ith (0 index based) character to end
 	static String reverse(int i, String s) {
 		StringBuilder str = new StringBuilder(s);
@@ -150,10 +154,54 @@ public class Solution {
 			}
 		}
 	}
+	
+	//calculate phi given modulo
+	static long phi(long n, int mod) {
+		float result = n;
+		
+		for(int i = 2; i * i <= n; i++) {
+			if(n % i == 0) {
+				while(n % i == 0) {
+					n /= i;
+				}
+				
+				result *= (1.0 - (1 / (float) i));
+				result %= mod;
+			}
+		}
+		
+		if(n > 1) {
+			result *= (1.0 - (1 / (float) n));
+			result %= mod;
+		}
+		
+		return (long) result;
+	}
+	
+	//calculate phi
+	static long phi(long n) {
+		float result = n;
+		
+		for(int i = 2; i * i <= n; i++) {
+			if(n % i == 0) {
+				while(n % i == 0) {
+					n /= i;
+				}
+				
+				result *= (1.0 - (1 / (float) i));
+			}
+		}
+		
+		if(n > 1) {
+			result *= (1.0 - (1 / (float) n));
+		}
+		
+		return (long) result;
+	}
 
 	// calculate fast power of base to the exponent
 	// method - binary exponentiation
-	static long power(int a, int b) {
+	static long power(long a, long b) {
 		if (b == 0)
 			return 1;
 
@@ -172,19 +220,27 @@ public class Solution {
 
 		return result;
 	}
+	
+	//modular binary exponentiation
+	static long powerMod(long a, long b, int mod) {
+		if (b == 0)
+			return 1;
 
-	public static long modExp(long b, long e, int mod) {
-		long r = 1;
-		
-		while (e > 0) {
-			if ((e & 1) == 1)
-				r = (r * b) % mod;
-			
-			b = (b * b) % mod;
-			e >>= 1;
+		if (a == 0)
+			return 0;
+
+		long result = 1;
+
+		while (b > 0) {
+			if ((b & 1) != 0) {
+				result = (result * a) % mod;
+			}
+
+			a = (a * a) % mod;
+			b >>= 1;
 		}
-		
-		return r;
+
+		return result;
 	}
 
 	// Babylonian fast square root method
@@ -320,22 +376,22 @@ public class Solution {
 		return true;
 	}
 
-	// dijkstra method
-	static long GCD(long a, long b) {
+	// Dijkstra's method
+	static long gcd(long a, long b) {
 		if (a == b)
 			return a;
 
 		if (a > b)
-			return GCD(a - b, b);
+			return gcd(a - b, b);
 		else
-			return GCD(a, b - a);
+			return gcd(a, b - a);
 	}
 	
-	// euclids method
-	static long GCD2(long a, long b) {
+	// Euclid's method
+	static long gcdAlt(long a, long b) {
 		if(a % b == 0) return b;
 		
-		return GCD2(b, a % b);
+		return gcdAlt(b, a % b);
 	}
 
 	static int binarySearch(int[] A, int x) {
