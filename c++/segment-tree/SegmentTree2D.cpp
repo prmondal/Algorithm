@@ -50,6 +50,43 @@ int rangeQueryX(int ix, int lx, int rx, int ly, int ry, int sx, int ex, int sy, 
     return rangeQueryX(2*ix, lx, rx, ly, ry, sx, mid, sy, ey, tree) + rangeQueryX(2*ix+1, lx, rx, ly, ry, mid+1, ex, sy, ey, tree);
 }
 
+void pointUpdateY(int ix, int iy, int x, int y, int sx, int ex, int sy, int ey, int v, int **tree, int **a) {
+    if(sy == ey) {
+        if(sx == ex) {
+            a[sx-1][sy-1] += v;
+            tree[ix][iy] = a[sx-1][sy-1];
+        } else {
+            tree[ix][iy] = tree[2*ix][iy] + tree[2*ix+1][iy];
+        }
+    } else {
+        int mid = (sy+ey)/2;
+        
+        if(y <= mid) {
+            pointUpdateY(ix, 2*iy, x, y, sx, ex, sy, mid, v, tree, a);
+        } else {
+            pointUpdateY(ix, 2*iy+1, x, y, sx, ex, mid+1, ey, v, tree, a);
+        }
+
+        tree[ix][iy] = tree[ix][2*iy] + tree[ix][2*iy+1];
+    }
+}
+
+void pointUpdateX(int ix, int x, int y, int sx, int ex, int sy, int ey, int v, int m, int **tree, int **a) {
+    if(x < sx || x > ex || y < sy || y > ey) return;
+
+    if(sx != ex) {
+        int mid = (sx+ex)/2;
+        
+        if(x <= mid) {
+            pointUpdateX(2*ix, x, y, sx, mid, sy, ey, v, m, tree, a);
+        } else {
+            pointUpdateX(2*ix+1, x, y, mid+1, ex, sy, ey, v, m, tree, a);
+        }
+    }
+
+    pointUpdateY(ix, 1, x, y, sx, ex, 1, m, v, tree, a);
+}
+
 int main()
 {   
     const int n = 4;
@@ -72,4 +109,7 @@ int main()
 
     buildX(1, 1, n, m, tree, a);
     cout << rangeQueryX(1, 3, 4, 3, 4, 1, n, 1, m, tree) << endl;
+
+    pointUpdateX(1,2,3,1,n,1,m,10,m,tree, a);
+    cout << rangeQueryX(1, 2, 2, 2, 3, 1, n, 1, m, tree) << endl;
 }  
