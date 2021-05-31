@@ -1,83 +1,84 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void build(int i, int s, int e, int *tree, int *a) {
+#define ll long long int
+const int nax = 1e5+7;
+const int TREE_SIZE = 2*(int)pow(2,ceil(log2(nax))) - 1;
+ll tree[TREE_SIZE];
+ll delta[TREE_SIZE];
+ll arr[nax];
+
+void build(int i, int s, int e) {
     if(s == e) {
-        tree[i] = a[s-1];
+        tree[i] = arr[s];
         return;
     }
 
     int mid = s + (e-s)/2;
 
-    build(2*i, s, mid, tree, a);
-    build(2*i+1, mid+1, e, tree, a);
+    build(2*i, s, mid);
+    build(2*i+1, mid+1, e);
 
     tree[i] = tree[2*i] + tree[2*i+1];
 }
 
-void propagate(int i, int *delta) {
-    delta[2*i] += delta[i];
-    delta[2*i+1] += delta[i];
+void propagate(int i, ll val, int s, int e) {
+    tree[i] += (e-s+1) * val;
+        
+    if (s != e) {
+        delta[2*i] += val;
+        delta[2*i+1] += val;
+    }
+ 
     delta[i] = 0;
-}
-
-void update(int i, int *tree, int *delta) {
-    tree[i] = tree[2*i] + delta[2*i] + tree[2*i+1] + delta[2*i+1];
-}
-
-void rangeUpdate(int i, int l, int r, int s, int e, int v, int *tree, int *delta) {
+}   
+ 
+void rangeUpdate(int i, int l, int r, int s, int e, int val) {
+    propagate(i, delta[i], s, e);
+    
     if(r < s || l > e) return;
-
+ 
     if(l <= s && e <= r) {
-        delta[i] += v;
+        propagate(i, val, s, e);
         return;
     }
-
-    propagate(i, delta);
-
+ 
     int mid = s + (e-s)/2;
-    rangeUpdate(2*i, l, r, s, mid, v, tree, delta);
-    rangeUpdate(2*i+1, l, r, mid+1, e, v, tree, delta);
-
-    update(i, tree, delta);
+    rangeUpdate(2*i, l, r, s, mid, val);
+    rangeUpdate(2*i+1, l, r, mid+1, e, val);
+ 
+    tree[i] = tree[2*i] + tree[2*i+1];
 }
-
-int rangeQuery(int i, int l, int r, int s, int e, int *tree, int *delta) {
+ 
+ll rangeQuery(int i, int l, int r, int s, int e) {
+    propagate(i, delta[i], s, e);
+    
     if(r < s || l > e) {
         return 0;
     }
-
+ 
     if(l <= s && e <= r) {
-        return tree[i] + delta[i] * (e-s+1);
+        return tree[i];
     }
-
-    propagate(i, delta);
-
+ 
     int mid = s + (e-s)/2;
-    int lv = rangeQuery(2*i, l, r, s, mid, tree, delta);
-    int rv = rangeQuery(2*i+1, l, r, mid+1, e, tree, delta);
-
-    return lv + rv;
+    return rangeQuery(2*i, l, r, s, mid) + rangeQuery(2*i+1, l, r, mid+1, e);
 }
 
 int main()
 {   
+    memset(tree, 0, sizeof(tree));
+    memset(delta, 0, sizeof(delta));
+
     int n = 10;
-    int *a = new int[n]{1,2,3,4,5,6,7,8,9,10};
-    int *tree = new int[4*n+1];
-    int *delta = new int[4*n+1];
+    for (int i = 1; i <= n; i++) arr[i] = i;
 
-    for(int i = 0; i < 4*n+1; i++) {
-        tree[i] = 0;
-        delta[i] = 0;
-    }
-
-    build(1, 1, n, tree, a);
+    build(1, 1, n);
     
     cout << "============ All Subarray Sum ============" << endl;
     for(int i = 1; i <= n; i++) {
         for(int j = i; j <= n; j++) {
-            cout << "[" << i << ", " << j << "]: " << rangeQuery(1, i, j, 1, n, tree, delta) << endl;
+            cout << "[" << i << ", " << j << "]: " << rangeQuery(1, i, j, 1, n) << endl;
         }
     }
 
@@ -85,19 +86,19 @@ int main()
     int i = 1, j = n;
     int v = 1;
     cout << "Increase [" << i << ", " << j << "] by " << v << endl;
-    rangeUpdate(1, i, j, 1, n, v, tree, delta);
-    cout << "Sum in [1, 10] is " << rangeQuery(1, 1, 10, 1, n, tree, delta) << endl;
+    rangeUpdate(1, i, j, 1, n, v);
+    cout << "Sum in [1, 10] is " << rangeQuery(1, 1, 10, 1, n) << endl;
 
     i = 1;
     j = 5;
     v = 2;
 
     cout << "Increase [" << i << ", " << j << "] by " << v << endl;
-    rangeUpdate(1, i, j, 1, n, v, tree, delta);
+    rangeUpdate(1, i, j, 1, n, v);
 
     v = 3;
     cout << "Increase [" << i << ", " << j << "] by " << v << endl;
-    rangeUpdate(1, i, j, 1, n, v, tree, delta);
+    rangeUpdate(1, i, j, 1, n, v);
 
-    cout << "Sum in [1, 5] is " << rangeQuery(1, 1, 5, 1, n, tree, delta) << endl;
+    cout << "Sum in [1, 5] is " << rangeQuery(1, 1, 5, 1, n) << endl;
 }  
